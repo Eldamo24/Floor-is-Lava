@@ -4804,7 +4804,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260349367}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5325577, y: 0.0028782038, z: -0.0018110035, w: 0.8463869}
+  m_LocalRotation: {x: 0.5325577, y: 0.002878269, z: -0.0018110445, w: 0.8463869}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9913,7 +9913,7 @@ MonoBehaviour:
     m_ActionId: a8e08030-4d2f-45da-b064-b9bdf5483c32
     m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -11738,7 +11738,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742882028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5629512, y: 0.0028105832, z: -0.001914402, w: 0.8264832}
+  m_LocalRotation: {x: 0.5629512, y: 0.0028105197, z: -0.0019143588, w: 0.8264832}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
