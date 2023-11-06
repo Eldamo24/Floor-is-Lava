@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
 
     private float upForce = 250f;
-    private float movementForce = 10f;
+    private float movementForce = 5f;
     private Vector2 input;
     // Start is called before the first frame update
     void Start()
