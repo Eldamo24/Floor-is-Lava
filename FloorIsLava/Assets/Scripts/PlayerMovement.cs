@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        rb = gameObject.GetComponent<Rigidbody>();
+        playerInput = gameObject.GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
@@ -31,13 +30,14 @@ public class PlayerMovement : MonoBehaviour
         rb.MovePosition(transform.position + new Vector3(input.x, 0f, input.y) * Time.deltaTime * movementForce);
     }
 
-    public void Jump(InputAction.CallbackContext callbackContext) 
+    public void Jump(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.performed)
         {
             rb.AddForce(Vector3.up * upForce);
         }
-        
+        Debug.Log("Hi");
+
     }
 
 }
