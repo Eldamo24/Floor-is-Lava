@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -26,7 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(new Vector3(input.x, 0f, input.y) * movementForce);
+        //  rb.AddForce(new Vector3(input.x, 0f, input.y) * movementForce);
+        rb.MovePosition(transform.position + new Vector3(input.x, 0f, input.y) * Time.deltaTime * movementForce);
     }
 
     public void Jump(InputAction.CallbackContext callbackContext) 
