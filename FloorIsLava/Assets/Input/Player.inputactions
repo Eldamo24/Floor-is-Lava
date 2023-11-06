@@ -37,6 +37,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "4e9e6f1d-f78d-46e4-97a4-6c05971ca18c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "Arrows",
                     "id": "0853f4a4-e7d8-4ebd-8f69-fdd74dbb2766",
                     "path": "2DVector",
