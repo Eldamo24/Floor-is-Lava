@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,13 +30,13 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         input = playerInput.actions["Movement"].ReadValue<Vector2>();
-        //Vector3 direction = new Vector3(input.x, 0f, input.y);
-        //if (direction.magnitude > 0.1f)
-        //{
-        //    float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
-        //    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        //    transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        //}
+        Vector3 direction = new Vector3(input.x, 0f, input.y);
+        if (direction.magnitude > 0.1f)
+        {
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        }
     }
 
     private void FixedUpdate()
