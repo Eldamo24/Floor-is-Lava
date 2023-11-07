@@ -66,7 +66,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        this.isGrounded = false;
+        if(collision.gameObject.tag == "Platform")
+        {
+            this.isGrounded = false;
+        }
+       
     }
 
 }
