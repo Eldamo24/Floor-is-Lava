@@ -8,6 +8,7 @@ TagManager:
   - Bat
   - LavaGeiser
   - Stake
+  - Rock
   layers:
   - Default
   - TransparentFX
