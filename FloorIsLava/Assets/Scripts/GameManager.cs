@@ -9,6 +9,10 @@ public class GameManager : MonoBehaviour
 
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
 
+    public LavaFloorBehaviour _lavaFloor;
+
+    public bool isGameOver;
+
     private void Awake()
     {
         if(gameManager != null && gameManager != this)
@@ -19,5 +23,10 @@ public class GameManager : MonoBehaviour
         {
             gameManager = this;
         }
+    }
+
+    void NewGame()
+    {
+
     }
 }
