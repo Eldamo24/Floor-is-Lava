@@ -6,10 +6,16 @@ public class LavaFloorBehaviour : MonoBehaviour
 {
     //fields
     Vector3 _startingPosition;
+    [SerializeField]
+    private float velocityMultiplier = 1.0f;
+    [SerializeField]
+    private bool frozenVelocity = false;
 
+    //Properties
     public Vector3 CurrentPosition { get { return transform.position;} set { transform.position = value; } }
 
     public Vector3 StartingPosition { get { return _startingPosition; } private set { _startingPosition = value; } }
+
 
     private void Awake()
     {
@@ -20,15 +26,25 @@ public class LavaFloorBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (!frozenVelocity)
         {
             IncreaseYPosition();
-            Debug.Log("espaace");
-            Debug.Log(StartingPosition.y.ToString());
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+
+        if (Input.GetKey(KeyCode.R))
         {
             RestartPosition();
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            frozenVelocity = !frozenVelocity;
+        }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            velocityMultiplier *= 2;
+        }else if (Input.GetKeyUp(KeyCode.V))
+        {
+            velocityMultiplier /= 2;
         }
     }
 
@@ -49,18 +65,14 @@ public class LavaFloorBehaviour : MonoBehaviour
         CurrentPosition = position;
     }
 
-    public void IncreaseYPosition(int multiplier)
+    public void IncreaseYPosition(float multiplier)
     {
-        Vector3 currentPosition = CurrentPosition;
-        SetPosition(new Vector3(
-                                currentPosition.x,
-                                (currentPosition.y + (1 * multiplier)),
-                                currentPosition.z));
+        transform.Translate((Vector3.up * multiplier) * Time.deltaTime, Space.World);
     }
 
     public void IncreaseYPosition()
     {
-        IncreaseYPosition(1);
+        IncreaseYPosition(velocityMultiplier);
     }
 
 }
