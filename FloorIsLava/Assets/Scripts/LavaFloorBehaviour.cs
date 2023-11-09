@@ -14,13 +14,21 @@ public class LavaFloorBehaviour : MonoBehaviour
     private void Awake()
     {
         StartingPosition = CurrentPosition;
+        Debug.Log(StartingPosition.y);
+        Debug.Log("START");
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKey(KeyCode.Space))
         {
             IncreaseYPosition();
+            Debug.Log("espaace");
+            Debug.Log(StartingPosition.y.ToString());
+        }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            RestartPosition();
         }
     }
 
