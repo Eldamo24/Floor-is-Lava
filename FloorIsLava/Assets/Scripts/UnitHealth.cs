@@ -48,6 +48,10 @@ public class UnitHealth
         {
             _currentHealth -= dmgAmount;
         }
+        if (_currentHealth <= 0)
+        {
+            
+        }
     }
 
     public void HealUnit(int healthAmount)
