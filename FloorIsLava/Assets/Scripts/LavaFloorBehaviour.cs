@@ -22,6 +22,11 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 
     public int damage { get;set; }
 
+    private void Start()
+    {
+        GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
+
+    }
     private void Awake()
     {
         StartingPosition = CurrentPosition;
@@ -56,6 +61,8 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         }
     }
 
+
+
     public void RestartPosition()
     {
         if(StartingPosition != null)
@@ -83,4 +90,19 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         IncreaseYPosition(_velocityMultiplier);
     }
 
+    private void OnGameStatusChanged(GameStatus newStatus)
+    {
+        switch(newStatus)
+        {
+            case GameStatus.Paused:
+                _frozenVelocity = true;
+                break;
+            case GameStatus.Playing: 
+                _frozenVelocity = false; 
+                break;
+            case GameStatus.GameOver: 
+                _velocityMultiplier = 18; 
+                break;
+        }
+    }
 }

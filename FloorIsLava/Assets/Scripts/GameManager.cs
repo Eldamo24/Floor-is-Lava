@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,68 +15,26 @@ public class GameManager : MonoBehaviour
     private UiManager _uiManager;
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
+    //field para saber en que estado está el juego
     [SerializeField]
-    private bool _isGameOver = false;
-    [SerializeField]
-    private bool _isGamePaused = false;
-    [SerializeField]
-    private bool _isLevelEnded = false;
-
+    private GameStatus _currentGameStatus;
+    public UnityEvent<GameStatus> OnGameStatusChanged;
 
 
     public static GameManager gameManager { get; private set; }
 
-    public bool IsGameOver { 
-        get 
-        { 
-            return _isGameOver; 
-        } 
-        private set 
-        {
-            _isGameOver = value;
-            if (value)
-            {
-                _uiManager.SetActive(UiObject.UiGameOver);
-                _lavaFloor.VelocityMultiplier = 10;
-
-            }
-        } 
-    }
-    public bool IsGamePaused
+    public GameStatus CurrentGameStatus
     {
         get
         {
-            return _isGamePaused;
+            return _currentGameStatus;
         }
-        private set
+        set
         {
-            if(!IsGameOver && !IsLevelEnded)
-            {
-                _isGamePaused = value;
-                if (value)
-                {
-                    _uiManager.SetActive(UiObject.UiPause);
-                }
-                else
-                {
-                    _uiManager.SetActive(UiObject.UiGameplay);
-                }
-            }
+            _currentGameStatus = value;
+            OnGameStatusChanged.Invoke(_currentGameStatus);
         }
     }
-
-    public bool IsLevelEnded
-    {
-        get
-        {
-            return _isLevelEnded;
-        }
-        private set
-        {
-            _isLevelEnded = value;
-        }
-    }
-
     private void Awake()
     {
         if(gameManager != null && gameManager != this)
@@ -90,22 +51,35 @@ public class GameManager : MonoBehaviour
 
     void NewGame()
     {
+        SceneManager.LoadScene("Level1");
+    }
+
+    void PauseGame()
+    {
 
     }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            IsGamePaused = (!IsGamePaused);
+            switch(CurrentGameStatus)
+            {
+                case GameStatus.Paused:
+                    CurrentGameStatus = GameStatus.Playing;
+                    break;
+                case GameStatus.Playing:
+                    CurrentGameStatus = GameStatus.Paused;
+                    break;
+            }
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            IsGameOver = (!IsGameOver);
+            CurrentGameStatus = GameStatus.GameOver;
         }
 
         if (_playerHealth.Health <= 0)
         {
-            IsGameOver = true;
+            CurrentGameStatus = GameStatus.GameOver;
         }
     }
 }
@@ -118,4 +92,12 @@ public static class Tags
     public const string LavaGeiser = "LavaGeiser";
     public const string Platform = "Platform";
     public const string Stake = "Stake";
+}
+
+public enum GameStatus
+{
+    Playing,
+    Paused,
+    GameOver,
+    LevelEnded
 }

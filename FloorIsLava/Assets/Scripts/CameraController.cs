@@ -9,8 +9,10 @@ public class CameraController : MonoBehaviour
     private GameObject _activeCamera;
     private CinemachineFreeLook _cineFL;
     private GameObject _currentCameraFollow;
+    private GameObject _currentCameraLookAt;
     private GameObject _player;
     private GameObject _spectatorPov;
+    private GameObject _spectatorTarget;
     private int _cameraFov;
     public GameObject CurrentCameraFollow
     {
@@ -22,6 +24,18 @@ public class CameraController : MonoBehaviour
         {
             _currentCameraFollow = value;
             _cineFL.Follow = value.transform;
+        }
+    }
+    public GameObject CurrentCameraLookAt
+    {
+        get
+        {
+            return _currentCameraLookAt;
+        }
+        private set
+        {
+            _currentCameraLookAt = value;
+            _cineFL.LookAt = value.transform;
         }
     }
     public int CameraFov
@@ -37,25 +51,33 @@ public class CameraController : MonoBehaviour
         }
     }
 
+
     void Start()
     {
-        CinemachineBrain cinemachineBrain = GetComponent<CinemachineBrain>();
-        _activeCamera = GameObject.Find(cinemachineBrain.ActiveVirtualCamera.Name);
-        _cineFL = _activeCamera.GetComponent<CinemachineFreeLook>();
+
         _player = GameObject.Find("Player");
         _spectatorPov = GameObject.Find("SpectatorPov");
+        _spectatorTarget = GameObject.Find("SpectatorTarget");
+        _activeCamera = GameObject.Find(
+                                        GetComponent<CinemachineBrain>()
+                                        .ActiveVirtualCamera.Name);
+        _cineFL = _activeCamera.GetComponent<CinemachineFreeLook>();
+
+        GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(GameManager.gameManager.IsGameOver)
-        {
-            CurrentCameraFollow = _spectatorPov;
-            CameraFov = 100;
-        }
 
+    private void OnGameStatusChanged(GameStatus newStatus)
+    {
+        switch (newStatus)
+        {
+            case GameStatus.GameOver:
+                CurrentCameraFollow = _spectatorPov;
+                CurrentCameraLookAt = _spectatorTarget;
+                CameraFov = 100;
+                break;
+        }
     }
 
 
