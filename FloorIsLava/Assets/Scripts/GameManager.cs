@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
+    private PlayerBehaviour _player;
     [SerializeField]
     private UiManager _uiManager;
     [SerializeField]
@@ -33,8 +34,9 @@ public class GameManager : MonoBehaviour
             if (value)
             {
                 _uiManager.SetActive(UiObject.UiGameOver);
+                _lavaFloor.VelocityMultiplier = 10;
+
             }
-            _lavaFloor.VelocityMultiplier = 20;
         } 
     }
     public bool IsGamePaused
@@ -82,6 +84,8 @@ public class GameManager : MonoBehaviour
         {
             gameManager = this;
         }
+
+        _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
     }
 
     void NewGame()
@@ -104,4 +108,14 @@ public class GameManager : MonoBehaviour
             IsGameOver = true;
         }
     }
+}
+
+public static class Tags
+{
+    public const string LavaFloor = "LavaFloor";
+    public const string Rock = "Rock";
+    public const string Bat = "Bat";
+    public const string LavaGeiser = "LavaGeiser";
+    public const string Platform = "Platform";
+    public const string Stake = "Stake";
 }

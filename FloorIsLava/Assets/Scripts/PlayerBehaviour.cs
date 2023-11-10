@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] HealthBar _healthBar;
-    // Start is called before the first frame update
-    void Start()
+    public bool IsDead
     {
-        
+        get
+        {
+            return GameManager.gameManager._playerHealth.Health < 1;
+        }
     }
 
     // Update is called once per frame
@@ -23,6 +26,23 @@ public class PlayerBehaviour : MonoBehaviour
         {
             PlayerHeal(10);
             Debug.Log(GameManager.gameManager._playerHealth.Health);
+        }
+
+        
+    }
+
+
+    public void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Entramos en colision");
+        GameObject collisionedObject = other.gameObject;
+
+        switch (collisionedObject.tag)
+        {
+            case Tags.LavaFloor:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                gameObject.isStatic = true;
+                break;
         }
     }
     private void FixedUpdate()
@@ -44,3 +64,4 @@ public class PlayerBehaviour : MonoBehaviour
 
     }
 }
+

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LavaFloorBehaviour : MonoBehaviour
+public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 {
     //fields
     Vector3 _startingPosition;
@@ -18,11 +18,14 @@ public class LavaFloorBehaviour : MonoBehaviour
 
     public Vector3 StartingPosition { get { return _startingPosition; } private set { _startingPosition = value; } }
 
-    public float VelocityMultiplier { get { return _velocityMultiplier; } set { _velocityMultiplier = value; } }  
+    public float VelocityMultiplier { get { return _velocityMultiplier; } set { _velocityMultiplier = value; } }
+
+    public int damage { get;set; }
 
     private void Awake()
     {
         StartingPosition = CurrentPosition;
+        damage = 1000;
     }
 
     private void Update()
