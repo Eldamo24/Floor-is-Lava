@@ -4,7 +4,7 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -51,13 +51,9 @@ public class GameManager : MonoBehaviour
 
     void NewGame()
     {
-        SceneManager.LoadScene("Level1");
-    }
-
-    void PauseGame()
-    {
 
     }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -70,6 +66,10 @@ public class GameManager : MonoBehaviour
                 case GameStatus.Playing:
                     CurrentGameStatus = GameStatus.Paused;
                     break;
+                case GameStatus.GameOver:
+                    NewGame();
+                    break;
+
             }
         }
         if (Input.GetKeyDown(KeyCode.F))
@@ -77,8 +77,9 @@ public class GameManager : MonoBehaviour
             CurrentGameStatus = GameStatus.GameOver;
         }
 
-        if (_playerHealth.Health <= 0)
+        if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
         {
+
             CurrentGameStatus = GameStatus.GameOver;
         }
     }

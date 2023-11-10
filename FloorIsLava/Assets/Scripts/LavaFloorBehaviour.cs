@@ -9,9 +9,13 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
     [SerializeField]
     private float _velocityMultiplier = 1.0f;
     [SerializeField]
+    private float _gameOverVelocityMultiplier;
+    [SerializeField]
     private bool _frozenVelocity = false;
     [SerializeField]
     private bool _levelFilled = false;
+    [SerializeField]
+    private int _levelFilledYPosition;
 
     //Properties
     public Vector3 CurrentPosition { get { return transform.position;} set { transform.position = value; } }
@@ -38,7 +42,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         if (!_frozenVelocity && !_levelFilled)
         {
             IncreaseYPosition();
-            if (CurrentPosition.y > 86)
+            if (CurrentPosition.y > _levelFilledYPosition)
             {
                 _levelFilled = true;
             };
@@ -101,7 +105,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
                 _frozenVelocity = false; 
                 break;
             case GameStatus.GameOver: 
-                _velocityMultiplier = 18; 
+                _velocityMultiplier = _gameOverVelocityMultiplier; 
                 break;
         }
     }

@@ -34,7 +34,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entramos en colision");
         GameObject collisionedObject = other.gameObject;
 
         switch (collisionedObject.tag)
@@ -48,7 +47,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Entramos en colision");
         GameObject collisionedObject = other.gameObject;
 
         switch (collisionedObject.tag)

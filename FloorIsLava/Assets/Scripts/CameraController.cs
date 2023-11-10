@@ -3,38 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject _activeCamera;
     private CinemachineFreeLook _cineFL;
-    private GameObject _currentCameraFollow;
-    private GameObject _currentCameraLookAt;
-    private GameObject _player;
     private GameObject _spectatorPov;
     private GameObject _spectatorTarget;
     private int _cameraFov;
-    public GameObject CurrentCameraFollow
+    public GameObject CurrentTransformCamFollow
     {
         get
         {
-            return _currentCameraFollow;
+            return _cineFL.Follow.gameObject;
         }
         private set
         {
-            _currentCameraFollow = value;
             _cineFL.Follow = value.transform;
         }
     }
-    public GameObject CurrentCameraLookAt
+    public GameObject CurrentTramsformCamLookAt
     {
         get
         {
-            return _currentCameraLookAt;
+            return _cineFL.LookAt.gameObject;
         }
         private set
         {
-            _currentCameraLookAt = value;
             _cineFL.LookAt = value.transform;
         }
     }
@@ -55,13 +50,8 @@ public class CameraController : MonoBehaviour
     void Start()
     {
 
-        _player = GameObject.Find("Player");
         _spectatorPov = GameObject.Find("SpectatorPov");
         _spectatorTarget = GameObject.Find("SpectatorTarget");
-        _activeCamera = GameObject.Find(
-                                        GetComponent<CinemachineBrain>()
-                                        .ActiveVirtualCamera.Name);
-        _cineFL = _activeCamera.GetComponent<CinemachineFreeLook>();
 
         GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
 
@@ -73,9 +63,15 @@ public class CameraController : MonoBehaviour
         switch (newStatus)
         {
             case GameStatus.GameOver:
-                CurrentCameraFollow = _spectatorPov;
-                CurrentCameraLookAt = _spectatorTarget;
-                CameraFov = 100;
+
+                GameObject activeCamera = GameObject.Find(
+                                                GetComponent<CinemachineBrain>()
+                                                .ActiveVirtualCamera.Name);
+                _cineFL = activeCamera.GetComponent<CinemachineFreeLook>();
+
+                CurrentTransformCamFollow = _spectatorPov;
+                CurrentTramsformCamLookAt  = _spectatorTarget;
+                CameraFov = 110;
                 break;
         }
     }
