@@ -41,7 +41,16 @@ public class PlayerBehaviour : MonoBehaviour
         {
             case Tags.LavaFloor:
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
-                gameObject.isStatic = true;
+                gameObject.GetComponent<Rigidbody>().useGravity = false;
+                break;
+            case Tags.Rock:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
+            case Tags.Stake:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
+            case Tags.LavaGeiser:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 break;
         }
     }
