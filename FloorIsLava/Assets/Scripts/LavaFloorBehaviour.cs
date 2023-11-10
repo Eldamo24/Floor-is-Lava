@@ -2,33 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LavaFloorBehaviour : MonoBehaviour
+public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 {
     //fields
     Vector3 _startingPosition;
     [SerializeField]
-    private float velocityMultiplier = 1.0f;
+    private float _velocityMultiplier = 1.0f;
     [SerializeField]
-    private bool frozenVelocity = false;
+    private bool _frozenVelocity = false;
+    [SerializeField]
+    private bool _levelFilled = false;
 
     //Properties
     public Vector3 CurrentPosition { get { return transform.position;} set { transform.position = value; } }
 
     public Vector3 StartingPosition { get { return _startingPosition; } private set { _startingPosition = value; } }
 
+    public float VelocityMultiplier { get { return _velocityMultiplier; } set { _velocityMultiplier = value; } }
+
+    public int damage { get;set; }
 
     private void Awake()
     {
         StartingPosition = CurrentPosition;
-        Debug.Log(StartingPosition.y);
-        Debug.Log("START");
+        damage = 1000;
     }
 
     private void Update()
     {
-        if (!frozenVelocity)
+        if (!_frozenVelocity && !_levelFilled)
         {
             IncreaseYPosition();
+            if (CurrentPosition.y > 86)
+            {
+                _levelFilled = true;
+            };
         }
 
         if (Input.GetKey(KeyCode.R))
@@ -37,14 +45,14 @@ public class LavaFloorBehaviour : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            frozenVelocity = !frozenVelocity;
+            _frozenVelocity = !_frozenVelocity;
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            velocityMultiplier *= 2;
+            _velocityMultiplier *= 2;
         }else if (Input.GetKeyUp(KeyCode.V))
         {
-            velocityMultiplier /= 2;
+            _velocityMultiplier /= 2;
         }
     }
 
@@ -72,7 +80,7 @@ public class LavaFloorBehaviour : MonoBehaviour
 
     public void IncreaseYPosition()
     {
-        IncreaseYPosition(velocityMultiplier);
+        IncreaseYPosition(_velocityMultiplier);
     }
 
 }
