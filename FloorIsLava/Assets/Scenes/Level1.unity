@@ -33607,7 +33607,7 @@ PrefabInstance:
       objectReference: {fileID: 1130147779}
     - target: {fileID: 3642451616590362660, guid: afb8dace10d5d1c4c998750b0126356a, type: 3}
       propertyPath: _velocityMultiplier
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3642451616590362660, guid: afb8dace10d5d1c4c998750b0126356a, type: 3}
       propertyPath: _levelFilledYPosition
@@ -35300,7 +35300,7 @@ PrefabInstance:
       objectReference: {fileID: 2104027298}
     - target: {fileID: 1581391196287966662, guid: 6336ff3528c1f97468b5bb0146de150f, type: 3}
       propertyPath: playerSpeed
-      value: 12
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4857944082602440066, guid: 6336ff3528c1f97468b5bb0146de150f, type: 3}
       propertyPath: field of view
