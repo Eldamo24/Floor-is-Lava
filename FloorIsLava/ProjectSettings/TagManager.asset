@@ -9,6 +9,7 @@ TagManager:
   - LavaGeiser
   - Stake
   - Rock
+  - LavaFloor
   layers:
   - Default
   - TransparentFX
