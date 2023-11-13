@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] HealthBar _healthBar;
-    GeiserDamageBehaviour geiserDamageBehaviour;
-    LittleRockBehaviour littleRockBehaviour;
+    [SerializeField] GeiserDamageBehaviour geiserDamageBehaviour;
+    [SerializeField] LittleRockBehaviour littleRockBehaviour;
     public bool IsDead
     {
         get
