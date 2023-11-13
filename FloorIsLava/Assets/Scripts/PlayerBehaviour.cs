@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] HealthBar _healthBar;
+    public GeiserDamageBehaviour geiserDamageBehaviour;
+    public LittleRockBehaviour littleRockBehaviour;
     public bool IsDead
     {
         get
@@ -15,6 +17,12 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
+    void Start()
+    {
+        geiserDamageBehaviour = FindObjectOfType<GeiserDamageBehaviour>();
+        littleRockBehaviour = FindObjectOfType<LittleRockBehaviour>();
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.LeftAlt))
@@ -32,6 +40,32 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
 
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.transform.tag == "Geiser") // Hay que cambiar el tag segun corresponda
+        {
+            PlayerTakeDmg(geiserDamageBehaviour.damage);
+        }
+
+        if (collision.transform.tag == "Rock")
+        {
+            PlayerTakeDmg(littleRockBehaviour.damage);
+        }
+
+        //if (collision.transform.tag == "Bat")  // Hay habilitarlo si corresponde
+        //{
+        //    PlayerTakeDmg(xxxxxxxxxxxxxxx.damage);
+        //}
+
+        //if (collision.transform.tag == "Life")  // Hay habilitarlo si corresponde
+        //{
+        //    PlayerHeal(xxxxxxxxxxxxxxx.life);
+        //}
+    }
+
+
+
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Entramos en colision");
@@ -46,19 +80,19 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Entramos en colision");
-        GameObject collisionedObject = other.gameObject;
+    //public void OnCollisionEnter(Collision other)
+    //{
+    //    Debug.Log("Entramos en colision");
+    //    GameObject collisionedObject = other.gameObject;
 
-        switch (collisionedObject.tag)
-        {
-            case Tags.Rock:
-            case Tags.LavaGeiser:
-                    PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
-                    break;
-        }
-    }
+    //    switch (collisionedObject.tag)
+    //    {
+    //        case Tags.Rock:
+    //        case Tags.LavaGeiser:
+    //                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+    //                break;
+    //    }
+    //}
     private void FixedUpdate()
     {
         //si colisiono con un gameobject && tiene tag damageGiver
