@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -35,12 +36,12 @@ public class TextBar : MonoBehaviour
             if (sliderBar.value <= 30)
             {
                 image.color = Color.red;
-                audioSource.Play();
+                audioSource.Play(); // Hay que agregar el audio en el audiosource del FillColor
             }
-         }
+        }
         catch
         {
-            Debug.Log("Error");
+            Console.Error.WriteLine();
         }
 
     }
