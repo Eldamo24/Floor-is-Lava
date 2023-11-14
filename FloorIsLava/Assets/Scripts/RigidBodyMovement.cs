@@ -17,7 +17,7 @@ public class RigidBodyMovement : MonoBehaviour
     private PlayerInput playerInput;
     public float rotationSpeed;
     [SerializeField]
-    private float upForce;
+    private float upForce = 290f;
     [SerializeField]
     private float playerSpeed = 15f;
 
@@ -25,9 +25,6 @@ public class RigidBodyMovement : MonoBehaviour
     void Start()
     {
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        upForce = 290f;
     }
 
     // Update is called once per frame

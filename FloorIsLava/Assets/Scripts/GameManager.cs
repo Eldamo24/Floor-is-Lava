@@ -49,6 +49,10 @@ public class GameManager : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
     }
 
+    private void Start()
+    {
+        
+    }
     void NewGame()
     {
 
@@ -56,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             switch(CurrentGameStatus)
             {
@@ -83,6 +87,7 @@ public class GameManager : MonoBehaviour
             CurrentGameStatus = GameStatus.GameOver;
         }
     }
+
 }
 
 public static class Tags
@@ -102,3 +107,4 @@ public enum GameStatus
     GameOver,
     LevelEnded
 }
+
