@@ -12,48 +12,37 @@ public class UiManager : MonoBehaviour
     private GameObject _uiPause;
     [SerializeField]
     private GameObject _uiLevelEnd;
+    private GameObject[] _uiElements;
 
-
-    void Update()
+    private void Start()
     {
+        _uiElements = new GameObject[] { _uiGameOver, _uiGameplay, _uiPause, _uiLevelEnd };
+        GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
+        _uiGameplay.SetActive(true);
     }
 
-    public void SetActive(UiObject uiObject)
+    private void OnGameStatusChanged(GameStatus newStatus)
     {
-        SetAllInactive();
-        switch (uiObject)
+        foreach (GameObject uiElement in _uiElements)
         {
-            case UiObject.UiGameOver:
-                _uiGameOver.SetActive(true);
-                break;
-            case UiObject.UiGameplay:
+            uiElement.SetActive(false);
+        }
+
+        switch (newStatus)
+        {
+            case GameStatus.Playing:
                 _uiGameplay.SetActive(true);
                 break;
-            case UiObject.UiPause:
+            case GameStatus.Paused:
                 _uiPause.SetActive(true);
                 break;
-            case UiObject.UiLevelEnd:
-                _uiLevelEnd.SetActive(true);
+            case GameStatus.GameOver: 
+                _uiGameOver.SetActive(true);
                 break;
-            default:
-                Debug.LogError("Invalid UiObject: " + uiObject);
+            case GameStatus.LevelEnded: 
+                _uiLevelEnd.SetActive(true); 
                 break;
         }
     }
 
-
-    public void SetAllInactive()
-    {
-        _uiGameOver.SetActive(false);
-        _uiGameplay.SetActive(false);
-        _uiPause.SetActive(false);
-        _uiLevelEnd.SetActive(false);
-    }
-}
-public enum UiObject
-{
-    UiGameOver,
-    UiGameplay,
-    UiPause,
-    UiLevelEnd
 }

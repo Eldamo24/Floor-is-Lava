@@ -3,25 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject _activeCamera;
     private CinemachineFreeLook _cineFL;
-    private GameObject _currentCameraFollow;
-    private GameObject _player;
     private GameObject _spectatorPov;
+    private GameObject _spectatorTarget;
     private int _cameraFov;
-    public GameObject CurrentCameraFollow
+    public GameObject CurrentTransformCamFollow
     {
         get
         {
-            return _currentCameraFollow;
+            return _cineFL.Follow.gameObject;
         }
         private set
         {
-            _currentCameraFollow = value;
             _cineFL.Follow = value.transform;
+        }
+    }
+    public GameObject CurrentTramsformCamLookAt
+    {
+        get
+        {
+            return _cineFL.LookAt.gameObject;
+        }
+        private set
+        {
+            _cineFL.LookAt = value.transform;
         }
     }
     public int CameraFov
@@ -37,25 +46,34 @@ public class CameraController : MonoBehaviour
         }
     }
 
+
     void Start()
     {
-        CinemachineBrain cinemachineBrain = GetComponent<CinemachineBrain>();
-        _activeCamera = GameObject.Find(cinemachineBrain.ActiveVirtualCamera.Name);
-        _cineFL = _activeCamera.GetComponent<CinemachineFreeLook>();
-        _player = GameObject.Find("Player");
+
         _spectatorPov = GameObject.Find("SpectatorPov");
+        _spectatorTarget = GameObject.Find("SpectatorTarget");
+
+        GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(GameManager.gameManager.IsGameOver)
-        {
-            CurrentCameraFollow = _spectatorPov;
-            CameraFov = 100;
-        }
 
+    private void OnGameStatusChanged(GameStatus newStatus)
+    {
+        switch (newStatus)
+        {
+            case GameStatus.GameOver:
+
+                GameObject activeCamera = GameObject.Find(
+                                                GetComponent<CinemachineBrain>()
+                                                .ActiveVirtualCamera.Name);
+                _cineFL = activeCamera.GetComponent<CinemachineFreeLook>();
+
+                CurrentTransformCamFollow = _spectatorPov;
+                CurrentTramsformCamLookAt  = _spectatorTarget;
+                CameraFov = 110;
+                break;
+        }
     }
 
 

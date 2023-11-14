@@ -16,8 +16,10 @@ public class RigidBodyMovement : MonoBehaviour
     private Vector2 input;
     private PlayerInput playerInput;
     public float rotationSpeed;
+    [SerializeField]
     private float upForce;
-    private float playerSpeed = 5f;
+    [SerializeField]
+    private float playerSpeed = 15f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,7 @@ public class RigidBodyMovement : MonoBehaviour
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        upForce = 250f;
+        upForce = 290f;
     }
 
     // Update is called once per frame
