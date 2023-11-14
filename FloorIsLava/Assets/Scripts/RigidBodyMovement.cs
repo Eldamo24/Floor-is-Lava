@@ -33,14 +33,17 @@ public class RigidBodyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
-        input = playerInput.actions["Movement"].ReadValue<Vector2>();
-        Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
-        if(inputDir != Vector3.zero)
+        if(GameManager.gameManager.CurrentGameStatus == GameStatus.Playing)
         {
-            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-            rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+            orientation.forward = viewDir.normalized;
+            input = playerInput.actions["Movement"].ReadValue<Vector2>();
+            Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
+            if (inputDir != Vector3.zero)
+            {
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+                rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            }
         }
     }
 
