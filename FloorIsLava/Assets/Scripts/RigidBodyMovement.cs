@@ -33,6 +33,7 @@ public class RigidBodyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
         upForce = 290f;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
