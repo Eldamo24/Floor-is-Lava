@@ -12,6 +12,7 @@ public class RigidBodyMovement : MonoBehaviour
     public Transform playerObj;
     public Rigidbody rb;
     public GameObject play;
+    private GameManager gameManager;
 
     private Vector2 input;
     private PlayerInput playerInput;
@@ -21,6 +22,7 @@ public class RigidBodyMovement : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 15f;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,19 +30,23 @@ public class RigidBodyMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         upForce = 290f;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
-        input = playerInput.actions["Movement"].ReadValue<Vector2>();
-        Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
-        if(inputDir != Vector3.zero)
+        if (gameManager.CurrentGameStatus == GameStatus.Playing)
         {
-            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-            rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+            orientation.forward = viewDir.normalized;
+            input = playerInput.actions["Movement"].ReadValue<Vector2>();
+            Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
+            if (inputDir != Vector3.zero)
+            {
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+                rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            }
         }
     }
 
@@ -53,6 +59,19 @@ public class RigidBodyMovement : MonoBehaviour
                 rb.AddForce(Vector3.up * upForce);
             }
 
+        }
+    }
+
+    public void Pause()
+    {
+        switch (gameManager.CurrentGameStatus)
+        {
+            case GameStatus.Paused:
+                gameManager.CurrentGameStatus = GameStatus.Playing;
+                break;
+            case GameStatus.Playing:
+                gameManager.CurrentGameStatus = GameStatus.Paused;
+                break;
         }
     }
 }

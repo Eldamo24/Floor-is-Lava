@@ -5,17 +5,28 @@ using UnityEngine;
 public class GeiserCreation : MonoBehaviour
 {
 
-    private GameObject geiser;
+    private ParticleSystem geiser;
+    private Collider box;
     private float time = 5f;
     void Start()
     {
-        geiser = transform.GetChild(0).gameObject;
+        geiser = GetComponent<ParticleSystem>();
+        box = GetComponent<Collider>();
         InvokeRepeating("changeGeiserState", 0f, time);
     }
 
     private void changeGeiserState()
     {
-        geiser.SetActive(!geiser.activeInHierarchy);
+        if (geiser.isEmitting)
+        {
+            geiser.Stop();
+            box.enabled = false;
+        }
+        else
+        {
+            geiser.Play();
+            box.enabled = true;
+        }
     }
 
 }
