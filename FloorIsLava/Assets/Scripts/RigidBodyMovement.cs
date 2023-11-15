@@ -12,6 +12,7 @@ public class RigidBodyMovement : MonoBehaviour
     public Transform playerObj;
     public Rigidbody rb;
     public GameObject play;
+    private GameManager gameManager;
 
     private Vector2 input;
     private PlayerInput playerInput;
@@ -21,6 +22,7 @@ public class RigidBodyMovement : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 15f;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class RigidBodyMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         upForce = 290f;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -53,6 +56,19 @@ public class RigidBodyMovement : MonoBehaviour
                 rb.AddForce(Vector3.up * upForce);
             }
 
+        }
+    }
+
+    public void Pause()
+    {
+        switch (gameManager.CurrentGameStatus)
+        {
+            case GameStatus.Paused:
+                gameManager.CurrentGameStatus = GameStatus.Playing;
+                break;
+            case GameStatus.Playing:
+                gameManager.CurrentGameStatus = GameStatus.Paused;
+                break;
         }
     }
 }

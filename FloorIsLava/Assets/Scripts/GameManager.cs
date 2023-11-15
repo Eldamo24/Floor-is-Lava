@@ -56,26 +56,26 @@ public class GameManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            switch(CurrentGameStatus)
-            {
-                case GameStatus.Paused:
-                    CurrentGameStatus = GameStatus.Playing;
-                    break;
-                case GameStatus.Playing:
-                    CurrentGameStatus = GameStatus.Paused;
-                    break;
-                case GameStatus.GameOver:
-                    NewGame();
-                    break;
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    switch(CurrentGameStatus)
+        //    {
+        //        case GameStatus.Paused:
+        //            CurrentGameStatus = GameStatus.Playing;
+        //            break;
+        //        case GameStatus.Playing:
+        //            CurrentGameStatus = GameStatus.Paused;
+        //            break;
+        //        case GameStatus.GameOver:
+        //            NewGame();
+        //            break;
 
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            CurrentGameStatus = GameStatus.GameOver;
-        }
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    CurrentGameStatus = GameStatus.GameOver;
+        //}
 
         if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
         {

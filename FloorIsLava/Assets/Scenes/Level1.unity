@@ -32480,9 +32480,81 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: 14fed0d1-e09a-47b6-8c58-bf81d4d352b6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: Player/Pause[/XInputControllerWindows/start,/Keyboard/escape]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 963194230}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 963194230}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 963194230}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Pause
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RigidBodyMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RigidBodyMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7603918877545734783, guid: d55b321b1c575114db01dc939983ff34, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32615,15 +32687,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3371075945658811494, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.25378326
+      value: 0.2537833
       objectReference: {fileID: 0}
     - target: {fileID: 3371075945658811494, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000029024312
+      value: -0.0000000033817755
       objectReference: {fileID: 0}
     - target: {fileID: 3371075945658811494, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000007615197
+      value: 8.8728674e-10
       objectReference: {fileID: 0}
     - target: {fileID: 4927057011361606781, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.y
@@ -32643,11 +32715,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5065490937449480072, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016828038
+      value: -0.000000016828038
       objectReference: {fileID: 0}
     - target: {fileID: 5065490937449480072, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000035884102
+      value: 0.0000000035884102
       objectReference: {fileID: 0}
     - target: {fileID: 8646095107801675813, guid: 97eb6099950b05d44ad60ee0aba7941e, type: 3}
       propertyPath: m_Name
