@@ -46,13 +46,36 @@ public class GameManager : MonoBehaviour
             gameManager = this;
         }
 
-        _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Level1":
+            case "Level2":
+                _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+                CurrentGameStatus = GameStatus.Playing;
+                break;
+            case "MainMenu":
+                CurrentGameStatus = GameStatus.OnMenu;
+                break;
+        }
+
+        //if (SceneManager.GetActiveScene().name == "Level1" || SceneManager.GetActiveScene().name == "Level2")
+        //{
+        //    _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+        //    CurrentGameStatus = GameStatus.Playing;
+        //}
+
     }
 
-    void NewGame()
+    private void Start()
     {
-
     }
+    public void NewGame()
+    {
+        SceneManager.LoadScene("Level1");
+        
+    }
+
+
 
     public void Update()
     {
@@ -83,6 +106,7 @@ public class GameManager : MonoBehaviour
             CurrentGameStatus = GameStatus.GameOver;
         }
     }
+
 }
 
 public static class Tags
@@ -100,5 +124,7 @@ public enum GameStatus
     Playing,
     Paused,
     GameOver,
-    LevelEnded
+    OnLevelEnd,
+    OnMenu
 }
+

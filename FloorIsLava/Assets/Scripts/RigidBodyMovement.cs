@@ -22,13 +22,17 @@ public class RigidBodyMovement : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 15f;
 
+    public bool IsMovementAllowed
+    {
+        get
+        {
+            return GameManager.gameManager.CurrentGameStatus == GameStatus.Playing;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         upForce = 290f;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
@@ -36,7 +40,7 @@ public class RigidBodyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.CurrentGameStatus == GameStatus.Playing)
+        if(IsMovementAllowed)
         {
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;

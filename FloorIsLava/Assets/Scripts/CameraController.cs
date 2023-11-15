@@ -63,18 +63,23 @@ public class CameraController : MonoBehaviour
         switch (newStatus)
         {
             case GameStatus.GameOver:
-
-                GameObject activeCamera = GameObject.Find(
-                                                GetComponent<CinemachineBrain>()
-                                                .ActiveVirtualCamera.Name);
-                _cineFL = activeCamera.GetComponent<CinemachineFreeLook>();
-
-                CurrentTransformCamFollow = _spectatorPov;
-                CurrentTramsformCamLookAt  = _spectatorTarget;
-                CameraFov = 110;
+                StartCoroutine("SetGameOverCamera");
                 break;
         }
     }
 
+    IEnumerator SetGameOverCamera()
+    {
+        GameObject activeCamera = GameObject.Find(
+                                GetComponent<CinemachineBrain>()
+                                .ActiveVirtualCamera.Name);
+        _cineFL = activeCamera.GetComponent<CinemachineFreeLook>();
 
+        CurrentTransformCamFollow = _spectatorPov;
+        CurrentTramsformCamLookAt = _spectatorTarget;
+        CameraFov = 110;
+        //detengo movimiento libre para no poder seguir moviendo la cámara desp de morir
+        yield return new WaitForSecondsRealtime(.5f);
+        _cineFL.enabled = false;
+    }
 }
