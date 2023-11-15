@@ -17,9 +17,9 @@ public class RigidBodyMovement : MonoBehaviour
     private PlayerInput playerInput;
     public float rotationSpeed;
     [SerializeField]
-    private float upForce = 290f;
+    private float upForce;
     [SerializeField]
-    private float playerSpeed = 15f;
+    private float playerSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +48,8 @@ public class RigidBodyMovement : MonoBehaviour
     {
         if (callbackContext.performed)
         {
+            Debug.Log(play.GetComponent<isGrounded>().isOnFloor);
+            Debug.Log(upForce.ToString());
             if (play.GetComponent<isGrounded>().isOnFloor)
             {
                 rb.AddForce(Vector3.up * upForce);

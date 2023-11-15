@@ -59,7 +59,6 @@ public class CursorManager
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("ME INICIARON");
     }
 
     public void SetCursorVisible()
