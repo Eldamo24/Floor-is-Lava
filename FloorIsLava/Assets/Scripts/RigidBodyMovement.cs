@@ -25,6 +25,8 @@ public class RigidBodyMovement : MonoBehaviour
     void Start()
     {
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
+        upForce = 250f;
+        playerSpeed = 8f;
     }
 
     // Update is called once per frame
