@@ -10,18 +10,12 @@ public class GameManager : MonoBehaviour
 {
 
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
-    private PlayerBehaviour _player;
-    [SerializeField]
-    private UiManager _uiManager;
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
-    //field para saber en que estado está el juego
+
     [SerializeField]
-    private GameStatus _currentGameStatus;
+    private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
     public UnityEvent<GameStatus> OnGameStatusChanged;
-
-
-    public static GameManager gameManager { get; private set; }
 
     public GameStatus CurrentGameStatus
     {
@@ -35,9 +29,11 @@ public class GameManager : MonoBehaviour
             OnGameStatusChanged.Invoke(_currentGameStatus);
         }
     }
+
+    public static GameManager gameManager { get; private set; } //para hacer singleton al GameManager
     private void Awake()
     {
-        if(gameManager != null && gameManager != this)
+        if (gameManager != null && gameManager != this)
         {
             Destroy(this);
         }
@@ -50,7 +46,6 @@ public class GameManager : MonoBehaviour
         {
             case "Level1":
             case "Level2":
-                _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
                 CurrentGameStatus = GameStatus.Playing;
                 break;
             case "MainMenu":
@@ -58,16 +53,21 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        //if (SceneManager.GetActiveScene().name == "Level1" || SceneManager.GetActiveScene().name == "Level2")
-        //{
-        //    CurrentGameStatus = GameStatus.Playing;
-        //}
-
     }
 
-    public void NewGame()
+    public void Update()
     {
-        SceneManager.LoadScene(GameScenes.Level1.ToString());
+
+        if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
+        {
+
+            CurrentGameStatus = GameStatus.GameOver;
+        }
+    }
+
+    public void NewGame(string str)
+    {
+        SceneManager.LoadScene(str);
     }
     public void RestartScene()
     {
@@ -85,12 +85,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(GameScenes.MainMenu.ToString());
     }
-
     public void ExitGame()
     {
         Application.Quit();
     }
-
     public void Pause()
     {
         switch (gameManager.CurrentGameStatus)
@@ -101,16 +99,6 @@ public class GameManager : MonoBehaviour
             case GameStatus.Playing:
                 gameManager.CurrentGameStatus = GameStatus.Paused;
                 break;
-        }
-    }
-
-    public void Update()
-    {
-
-        if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
-        {
-
-            CurrentGameStatus = GameStatus.GameOver;
         }
     }
 
