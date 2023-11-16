@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class Grappling : MonoBehaviour
@@ -10,6 +11,7 @@ public class Grappling : MonoBehaviour
     public Transform gunTip, camera, player;
     private float maxDistance = 600f;
     private SpringJoint joint;
+    private bool isGrappling = false;
 
     private void Awake()
     {
@@ -19,14 +21,7 @@ public class Grappling : MonoBehaviour
     private void Update()
     {
         
-        if (Input.GetMouseButtonDown(0))
-        {
-            StartGrapple();
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            StopGrapple();
-        }
+        
     }
 
     private void LateUpdate()
@@ -37,8 +32,10 @@ public class Grappling : MonoBehaviour
     void StartGrapple()
     {
         RaycastHit hit;
+        Debug.Log("Intente Graplear");
         if(Physics.Raycast(gunTip.position, camera.forward, out hit, maxDistance, whatIsGrappeable))
         {
+            Debug.Log("estoy grapleando con el stake");
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
@@ -66,6 +63,7 @@ public class Grappling : MonoBehaviour
 
     void StopGrapple()
     {
+        Debug.Log("Deje de graplear");
         lr.positionCount = 0;
         Destroy(joint);
     }
@@ -79,4 +77,24 @@ public class Grappling : MonoBehaviour
     {
         return grapplePoint;
     }
+
+    public void Grap(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.performed) 
+        {
+            if (isGrappling)
+            {
+                isGrappling = false;
+                StopGrapple();
+            }
+            else
+            {
+                isGrappling = true;
+                StartGrapple();
+            }
+        }
+            
+    }
+        
+
 }
