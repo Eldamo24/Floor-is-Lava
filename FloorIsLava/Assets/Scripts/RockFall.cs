@@ -15,7 +15,6 @@ public class RockFall : MonoBehaviour
             {
                 Rigidbody rb = rock.AddComponent<Rigidbody>();
                 rb.mass = 300;
-
             }
         }
     }

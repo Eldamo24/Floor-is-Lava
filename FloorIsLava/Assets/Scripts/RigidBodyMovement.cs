@@ -16,11 +16,11 @@ public class RigidBodyMovement : MonoBehaviour
 
     private Vector2 input;
     private PlayerInput playerInput;
-    public float rotationSpeed;
+    public float rotationSpeed = 7f;
     [SerializeField]
     private float upForce = 290f;
     [SerializeField]
-    private float playerSpeed = 15f;
+    private float playerSpeed = 4f;
 
     public bool IsMovementAllowed
     {
@@ -63,7 +63,6 @@ public class RigidBodyMovement : MonoBehaviour
             {
                 if (play.GetComponent<isGrounded>().isOnFloor)
                 {
-                    Debug.Log(upForce);
                     rb.AddForce(Vector3.up * upForce);
                 }
             }
