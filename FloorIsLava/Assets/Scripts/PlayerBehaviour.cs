@@ -42,6 +42,9 @@ public class PlayerBehaviour : MonoBehaviour
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 gameObject.GetComponent<Rigidbody>().useGravity = false;
                 break;
+            case Tags.LavaGeiser:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
         }
     }
 
@@ -52,9 +55,8 @@ public class PlayerBehaviour : MonoBehaviour
         switch (collisionedObject.tag)
         {
             case Tags.Rock:
-            case Tags.LavaGeiser:
-                    PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
-                    break;
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
         }
     }
     private void FixedUpdate()

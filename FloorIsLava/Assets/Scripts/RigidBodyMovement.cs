@@ -18,25 +18,30 @@ public class RigidBodyMovement : MonoBehaviour
     private PlayerInput playerInput;
     public float rotationSpeed;
     [SerializeField]
-    private float upForce;
+    private float upForce = 290f;
     [SerializeField]
     private float playerSpeed = 15f;
 
+    public bool IsMovementAllowed
+    {
+        get
+        {
+            return GameManager.gameManager.CurrentGameStatus == GameStatus.Playing;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        upForce = 290f;
+        //upForce = 290f;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.CurrentGameStatus == GameStatus.Playing)
+        if(IsMovementAllowed)
         {
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
@@ -52,26 +57,25 @@ public class RigidBodyMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
+        try
         {
-            if (play.GetComponent<isGrounded>().isOnFloor)
+            if (callbackContext.performed)
             {
-                rb.AddForce(Vector3.up * upForce);
+                if (play.GetComponent<isGrounded>().isOnFloor)
+                {
+                    Debug.Log(upForce);
+                    rb.AddForce(Vector3.up * upForce);
+                }
             }
-
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogError(e.ToString());
         }
     }
 
     public void Pause()
     {
-        switch (gameManager.CurrentGameStatus)
-        {
-            case GameStatus.Paused:
-                gameManager.CurrentGameStatus = GameStatus.Playing;
-                break;
-            case GameStatus.Playing:
-                gameManager.CurrentGameStatus = GameStatus.Paused;
-                break;
-        }
+        GameManager.gameManager.Pause();
     }
 }

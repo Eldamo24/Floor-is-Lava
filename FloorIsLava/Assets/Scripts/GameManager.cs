@@ -10,18 +10,12 @@ public class GameManager : MonoBehaviour
 {
 
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
-    private PlayerBehaviour _player;
-    [SerializeField]
-    private UiManager _uiManager;
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
-    //field para saber en que estado está el juego
+
     [SerializeField]
-    private GameStatus _currentGameStatus;
+    private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
     public UnityEvent<GameStatus> OnGameStatusChanged;
-
-
-    public static GameManager gameManager { get; private set; }
 
     public GameStatus CurrentGameStatus
     {
@@ -35,9 +29,11 @@ public class GameManager : MonoBehaviour
             OnGameStatusChanged.Invoke(_currentGameStatus);
         }
     }
+
+    public static GameManager gameManager { get; private set; } //para hacer singleton al GameManager
     private void Awake()
     {
-        if(gameManager != null && gameManager != this)
+        if (gameManager != null && gameManager != this)
         {
             Destroy(this);
         }
@@ -46,36 +42,21 @@ public class GameManager : MonoBehaviour
             gameManager = this;
         }
 
-        _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
-    }
-
-    void NewGame()
-    {
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Level1":
+            case "Level2":
+                CurrentGameStatus = GameStatus.Playing;
+                break;
+            case "MainMenu":
+                CurrentGameStatus = GameStatus.OnMenu;
+                break;
+        }
 
     }
 
     public void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    switch(CurrentGameStatus)
-        //    {
-        //        case GameStatus.Paused:
-        //            CurrentGameStatus = GameStatus.Playing;
-        //            break;
-        //        case GameStatus.Playing:
-        //            CurrentGameStatus = GameStatus.Paused;
-        //            break;
-        //        case GameStatus.GameOver:
-        //            NewGame();
-        //            break;
-
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    CurrentGameStatus = GameStatus.GameOver;
-        //}
 
         if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
         {
@@ -83,6 +64,44 @@ public class GameManager : MonoBehaviour
             CurrentGameStatus = GameStatus.GameOver;
         }
     }
+
+    public void NewGame(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+    public void RestartScene()
+    {
+        try
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(GameScenes.MainMenu.ToString());
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    public void Pause()
+    {
+        switch (gameManager.CurrentGameStatus)
+        {
+            case GameStatus.Paused:
+                gameManager.CurrentGameStatus = GameStatus.Playing;
+                break;
+            case GameStatus.Playing:
+                gameManager.CurrentGameStatus = GameStatus.Paused;
+                break;
+        }
+    }
+
 }
 
 public static class Tags
@@ -100,5 +119,13 @@ public enum GameStatus
     Playing,
     Paused,
     GameOver,
-    LevelEnded
+    OnLevelEnd,
+    OnMenu
+}
+
+public enum GameScenes
+{
+    MainMenu,
+    Level1,
+    Level2,
 }
