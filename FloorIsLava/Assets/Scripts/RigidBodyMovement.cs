@@ -57,13 +57,20 @@ public class RigidBodyMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
+        try
         {
-            if (play.GetComponent<isGrounded>().isOnFloor)
+            if (callbackContext.performed)
             {
-                rb.AddForce(Vector3.up * upForce);
+                if (play.GetComponent<isGrounded>().isOnFloor)
+                {
+                    Debug.Log(upForce);
+                    rb.AddForce(Vector3.up * upForce);
+                }
             }
-
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogError(e.ToString());
         }
     }
 
