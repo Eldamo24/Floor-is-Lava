@@ -60,45 +60,52 @@ public class GameManager : MonoBehaviour
 
         //if (SceneManager.GetActiveScene().name == "Level1" || SceneManager.GetActiveScene().name == "Level2")
         //{
-        //    _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
         //    CurrentGameStatus = GameStatus.Playing;
         //}
 
     }
 
-    private void Start()
-    {
-    }
     public void NewGame()
     {
-        SceneManager.LoadScene("Level1");
-        
+        SceneManager.LoadScene(GameScenes.Level1.ToString());
+    }
+    public void RestartScene()
+    {
+        try
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(GameScenes.MainMenu.ToString());
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 
+    public void Pause()
+    {
+        switch (gameManager.CurrentGameStatus)
+        {
+            case GameStatus.Paused:
+                gameManager.CurrentGameStatus = GameStatus.Playing;
+                break;
+            case GameStatus.Playing:
+                gameManager.CurrentGameStatus = GameStatus.Paused;
+                break;
+        }
+    }
 
     public void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    switch(CurrentGameStatus)
-        //    {
-        //        case GameStatus.Paused:
-        //            CurrentGameStatus = GameStatus.Playing;
-        //            break;
-        //        case GameStatus.Playing:
-        //            CurrentGameStatus = GameStatus.Paused;
-        //            break;
-        //        case GameStatus.GameOver:
-        //            NewGame();
-        //            break;
-
-        //    }
-        //}
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    CurrentGameStatus = GameStatus.GameOver;
-        //}
 
         if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
         {
@@ -128,3 +135,9 @@ public enum GameStatus
     OnMenu
 }
 
+public enum GameScenes
+{
+    MainMenu,
+    Level1,
+    Level2,
+}

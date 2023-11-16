@@ -23,9 +23,10 @@ public class UiManager : MonoBehaviour
     {
         _uiElements = new GameObject[] { _uiGameOver, _uiGameplay, _uiPause, _uiLevelEnd, _uiMainMenu };
         GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
-        //SetUIBasedOnGameStatus(GameManager.gameManager.CurrentGameStatus);
         _cursorManager = new CursorManager();
 
+        //cuando inicio una nueva escena arranca Start así que evalúo si es level1 o 2 
+        //en caso de serlo, se activa la ui de playing
         switch (SceneManager.GetActiveScene().name)
         {
             case "Level1":
