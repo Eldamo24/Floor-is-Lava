@@ -35,6 +35,7 @@ public class Grappling : MonoBehaviour
         Debug.Log("Intente Graplear");
         if(Physics.Raycast(gunTip.position, camera.forward, out hit, maxDistance, whatIsGrappeable))
         {
+            isGrappling = true;
             Debug.Log("estoy grapleando con el stake");
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -89,7 +90,7 @@ public class Grappling : MonoBehaviour
             }
             else
             {
-                isGrappling = true;
+                
                 StartGrapple();
             }
         }
