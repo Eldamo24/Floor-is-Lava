@@ -2,81 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
-    private PlayerBehaviour _player;
-    [SerializeField]
-    private UiManager _uiManager;
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
+
     [SerializeField]
-    private bool _isGameOver = false;
-    [SerializeField]
-    private bool _isGamePaused = false;
-    [SerializeField]
-    private bool _isLevelEnded = false;
+    private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
+    public UnityEvent<GameStatus> OnGameStatusChanged;
 
-
-
-    public static GameManager gameManager { get; private set; }
-
-    public bool IsGameOver { 
-        get 
-        { 
-            return _isGameOver; 
-        } 
-        private set 
-        {
-            _isGameOver = value;
-            if (value)
-            {
-                _uiManager.SetActive(UiObject.UiGameOver);
-                _lavaFloor.VelocityMultiplier = 10;
-
-            }
-        } 
-    }
-    public bool IsGamePaused
+    public GameStatus CurrentGameStatus
     {
         get
         {
-            return _isGamePaused;
+            return _currentGameStatus;
         }
-        private set
+        set
         {
-            if(!IsGameOver && !IsLevelEnded)
-            {
-                _isGamePaused = value;
-                if (value)
-                {
-                    _uiManager.SetActive(UiObject.UiPause);
-                }
-                else
-                {
-                    _uiManager.SetActive(UiObject.UiGameplay);
-                }
-            }
+            _currentGameStatus = value;
+            OnGameStatusChanged.Invoke(_currentGameStatus);
         }
     }
 
-    public bool IsLevelEnded
-    {
-        get
-        {
-            return _isLevelEnded;
-        }
-        private set
-        {
-            _isLevelEnded = value;
-        }
-    }
-
+    public static GameManager gameManager { get; private set; } //para hacer singleton al GameManager
     private void Awake()
     {
-        if(gameManager != null && gameManager != this)
+        if (gameManager != null && gameManager != this)
         {
             Destroy(this);
         }
@@ -85,29 +42,66 @@ public class GameManager : MonoBehaviour
             gameManager = this;
         }
 
-        _player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Level1":
+            case "Level2":
+                CurrentGameStatus = GameStatus.Playing;
+                break;
+            case "MainMenu":
+                CurrentGameStatus = GameStatus.OnMenu;
+                break;
+        }
+
     }
 
-    void NewGame()
-    {
-
-    }
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            IsGamePaused = (!IsGamePaused);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            IsGameOver = (!IsGameOver);
-        }
 
-        if (_playerHealth.Health <= 0)
+        if (_playerHealth.Health <= 0 && CurrentGameStatus != GameStatus.GameOver)
         {
-            IsGameOver = true;
+
+            CurrentGameStatus = GameStatus.GameOver;
         }
     }
+
+    public void NewGame(string str)
+    {
+        SceneManager.LoadScene(str);
+    }
+    public void RestartScene()
+    {
+        try
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+
+    }
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(GameScenes.MainMenu.ToString());
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    public void Pause()
+    {
+        switch (gameManager.CurrentGameStatus)
+        {
+            case GameStatus.Paused:
+                gameManager.CurrentGameStatus = GameStatus.Playing;
+                break;
+            case GameStatus.Playing:
+                gameManager.CurrentGameStatus = GameStatus.Paused;
+                break;
+        }
+    }
+
 }
 
 public static class Tags
@@ -118,4 +112,20 @@ public static class Tags
     public const string LavaGeiser = "LavaGeiser";
     public const string Platform = "Platform";
     public const string Stake = "Stake";
+}
+
+public enum GameStatus
+{
+    Playing,
+    Paused,
+    GameOver,
+    OnLevelEnd,
+    OnMenu
+}
+
+public enum GameScenes
+{
+    MainMenu,
+    Level1,
+    Level2,
 }

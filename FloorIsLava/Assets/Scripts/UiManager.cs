@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiManager : MonoBehaviour
 {
@@ -12,48 +13,95 @@ public class UiManager : MonoBehaviour
     private GameObject _uiPause;
     [SerializeField]
     private GameObject _uiLevelEnd;
+    [SerializeField]
+    private GameObject _uiMainMenu;
+    private GameObject[] _uiElements;
+    private  CursorManager _cursorManager;
 
 
-    void Update()
+    private void Start()
     {
-    }
+        _uiElements = new GameObject[] { _uiGameOver, _uiGameplay, _uiPause, _uiLevelEnd, _uiMainMenu };
+        GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
+        _cursorManager = new CursorManager();
 
-    public void SetActive(UiObject uiObject)
-    {
-        SetAllInactive();
-        switch (uiObject)
+        //cuando inicio una nueva escena arranca Start así que evalúo si es level1 o 2 
+        //en caso de serlo, se activa la ui de playing
+        switch (SceneManager.GetActiveScene().name)
         {
-            case UiObject.UiGameOver:
-                _uiGameOver.SetActive(true);
-                break;
-            case UiObject.UiGameplay:
-                _uiGameplay.SetActive(true);
-                break;
-            case UiObject.UiPause:
-                _uiPause.SetActive(true);
-                break;
-            case UiObject.UiLevelEnd:
-                _uiLevelEnd.SetActive(true);
-                break;
-            default:
-                Debug.LogError("Invalid UiObject: " + uiObject);
+            case "Level1":
+            case "Level2":
+                SetUIBasedOnGameStatus(GameStatus.Playing); 
                 break;
         }
     }
 
 
-    public void SetAllInactive()
+
+
+    private void SetUIBasedOnGameStatus(GameStatus status)
     {
-        _uiGameOver.SetActive(false);
-        _uiGameplay.SetActive(false);
-        _uiPause.SetActive(false);
-        _uiLevelEnd.SetActive(false);
+        foreach (GameObject uiElement in _uiElements)
+        {
+            uiElement.SetActive(false);
+        }
+
+        switch (status)
+        {
+            case GameStatus.Playing:
+                _uiGameplay.SetActive(true);
+                _cursorManager.SetCursorInvisible();
+                break;
+            case GameStatus.Paused:
+                _uiPause.SetActive(true);
+                _cursorManager.SetCursorVisible();
+                break;
+            case GameStatus.GameOver:
+                _uiGameOver.SetActive(true);
+                _cursorManager.SetCursorVisible();
+                break;
+            case GameStatus.OnLevelEnd:
+                _uiLevelEnd.SetActive(true);
+                _cursorManager.SetCursorVisible();
+                break;
+            case GameStatus.OnMenu:
+                _uiMainMenu.SetActive(true);
+                _cursorManager.SetCursorVisible();
+                break;
+        }
     }
+
+    private void OnGameStatusChanged(GameStatus newStatus)
+    {
+        SetUIBasedOnGameStatus(newStatus);
+    }
+
 }
-public enum UiObject
+
+public class CursorManager
 {
-    UiGameOver,
-    UiGameplay,
-    UiPause,
-    UiLevelEnd
+    public CursorManager()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void SetCursorVisible()
+    {
+
+        if (!Cursor.visible)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+    }
+
+    public void SetCursorInvisible()
+    {
+        if (Cursor.visible)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
 }

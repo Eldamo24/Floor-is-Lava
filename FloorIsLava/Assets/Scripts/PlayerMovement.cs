@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private PlayerInput playerInput;
     private Transform camera;
-
+    [SerializeField]
     private float upForce = 250f;
+    [SerializeField]
     private float movementForce = 5f;
     private Vector2 input;
     private float turnSmoothTime = 0.1f;

@@ -11,8 +11,12 @@ public class RockFall : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Rigidbody rb = rock.AddComponent<Rigidbody>();
-            rb.mass = 300;
+            if(rock.GetComponent<Rigidbody>() == null)
+            {
+                Rigidbody rb = rock.AddComponent<Rigidbody>();
+                rb.mass = 300;
+
+            }
         }
     }
 }

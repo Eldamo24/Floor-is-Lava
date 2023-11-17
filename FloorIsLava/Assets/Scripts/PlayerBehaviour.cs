@@ -34,7 +34,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entramos en colision");
         GameObject collisionedObject = other.gameObject;
 
         switch (collisionedObject.tag)
@@ -43,20 +42,21 @@ public class PlayerBehaviour : MonoBehaviour
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 gameObject.GetComponent<Rigidbody>().useGravity = false;
                 break;
+            case Tags.LavaGeiser:
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
         }
     }
 
     public void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Entramos en colision");
         GameObject collisionedObject = other.gameObject;
 
         switch (collisionedObject.tag)
         {
             case Tags.Rock:
-            case Tags.LavaGeiser:
-                    PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
-                    break;
+                PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
+                break;
         }
     }
     private void FixedUpdate()

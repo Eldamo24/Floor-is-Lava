@@ -12,45 +12,70 @@ public class RigidBodyMovement : MonoBehaviour
     public Transform playerObj;
     public Rigidbody rb;
     public GameObject play;
+    private GameManager gameManager;
 
     private Vector2 input;
     private PlayerInput playerInput;
     public float rotationSpeed;
-    private float upForce;
-    private float playerSpeed = 5f;
+    [SerializeField]
+    private float upForce = 290f;
+    [SerializeField]
+    private float playerSpeed = 15f;
+
+    public bool IsMovementAllowed
+    {
+        get
+        {
+            return GameManager.gameManager.CurrentGameStatus == GameStatus.Playing;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        upForce = 250f;
+        //upForce = 290f;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
-        input = playerInput.actions["Movement"].ReadValue<Vector2>();
-        Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
-        if(inputDir != Vector3.zero)
+        if(IsMovementAllowed)
         {
-            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-            rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+            orientation.forward = viewDir.normalized;
+            input = playerInput.actions["Movement"].ReadValue<Vector2>();
+            Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
+            if (inputDir != Vector3.zero)
+            {
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+                rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+            }
         }
     }
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
+        try
         {
-            if (play.GetComponent<isGrounded>().isOnFloor)
+            if (callbackContext.performed)
             {
-                rb.AddForce(Vector3.up * upForce);
+                if (play.GetComponent<isGrounded>().isOnFloor)
+                {
+                    Debug.Log(upForce);
+                    rb.AddForce(Vector3.up * upForce);
+                }
             }
-
         }
+        catch(System.Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+    }
+
+    public void Pause()
+    {
+        GameManager.gameManager.Pause();
     }
 }
