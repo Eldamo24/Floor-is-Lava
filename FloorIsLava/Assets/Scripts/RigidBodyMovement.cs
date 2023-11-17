@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class RigidBodyMovement : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class RigidBodyMovement : MonoBehaviour
     public Rigidbody rb;
     public GameObject play;
     private GameManager gameManager;
+    [SerializeField]
+    private Animator anim;
 
     private Vector2 input;
     private PlayerInput playerInput;
@@ -41,14 +45,20 @@ public class RigidBodyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsMovementAllowed)
+        if (IsMovementAllowed)
         {
+            //if (play.GetComponent<isGrounded>().isOnFloor)
+            //{
+            //    anim.SetInteger("Jumping", 0);
+            //}
+            anim.SetBool("IsRunning", false);
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
             input = playerInput.actions["Movement"].ReadValue<Vector2>();
             Vector3 inputDir = orientation.forward * input.y + orientation.right * input.x;
             if (inputDir != Vector3.zero)
             {
+                anim.SetBool("IsRunning", true);
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
                 rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
             }
@@ -64,10 +74,12 @@ public class RigidBodyMovement : MonoBehaviour
                 if (play.GetComponent<isGrounded>().isOnFloor)
                 {
                     rb.AddForce(Vector3.up * upForce);
+                    anim.SetInteger("Jumping", 1);
                 }
+
             }
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError(e.ToString());
         }
@@ -77,4 +89,6 @@ public class RigidBodyMovement : MonoBehaviour
     {
         GameManager.gameManager.Pause();
     }
+
+
 }
