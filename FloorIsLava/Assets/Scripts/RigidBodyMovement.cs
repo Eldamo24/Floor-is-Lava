@@ -40,6 +40,8 @@ public class RigidBodyMovement : MonoBehaviour
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
         //upForce = 290f;
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        play.GetComponent<isGrounded>().OnFloorCollisionChanged.AddListener(setJumpingAnimation);
+
     }
 
     // Update is called once per frame
@@ -47,7 +49,6 @@ public class RigidBodyMovement : MonoBehaviour
     {
         if (IsMovementAllowed)
         {
-            anim.SetInteger("Jumping", 0);
             anim.SetBool("IsRunning", false);
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
@@ -69,12 +70,16 @@ public class RigidBodyMovement : MonoBehaviour
         {
             if (play.GetComponent<isGrounded>().isOnFloor)
             {
-                anim.SetInteger("Jumping", 1);
                 rb.AddForce(Vector3.up * upForce);
             }
 
         }
 
+    }
+
+    private void setJumpingAnimation(bool isOnFloor)
+    {
+        anim.SetBool("Jumping", !isOnFloor);
     }
 
     public void Pause()

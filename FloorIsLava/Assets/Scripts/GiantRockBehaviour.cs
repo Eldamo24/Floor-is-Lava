@@ -12,5 +12,11 @@ public class GiantRockBehaviour : MonoBehaviour, IEnemyDamage
         damage = 20;
     }
 
-
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Platform")
+    //    {
+    //        GetComponent<Collider>().enabled = false;
+    //    }
+    //}
 }
