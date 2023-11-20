@@ -47,15 +47,8 @@ public class RigidBodyMovement : MonoBehaviour
     {
         if (IsMovementAllowed)
         {
-            if (play.GetComponent<isGrounded>().isOnFloor && anim.GetInteger("Jumping") == 1)
-            {
-                anim.SetInteger("Jumping", 0);
-            }
-            if (anim.GetBool("IsRunning"))
-            {
-                anim.SetBool("IsRunning", false);
-
-            }
+            anim.SetInteger("Jumping", 0);
+            anim.SetBool("IsRunning", false);
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
             input = playerInput.actions["Movement"].ReadValue<Vector2>();
@@ -71,22 +64,17 @@ public class RigidBodyMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        try
-        {
-            if (callbackContext.performed)
-            {
-                if (play.GetComponent<isGrounded>().isOnFloor)
-                {
-                    rb.AddForce(Vector3.up * upForce);
-                    anim.SetInteger("Jumping", 1);
-                }
 
-            }
-        }
-        catch (System.Exception e)
+        if (callbackContext.performed)
         {
-            Debug.LogError(e.ToString());
+            if (play.GetComponent<isGrounded>().isOnFloor)
+            {
+                anim.SetInteger("Jumping", 1);
+                rb.AddForce(Vector3.up * upForce);
+            }
+
         }
+
     }
 
     public void Pause()

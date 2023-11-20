@@ -10,6 +10,7 @@ TagManager:
   - Stake
   - Rock
   - LavaFloor
+  - Healer
   layers:
   - Default
   - TransparentFX

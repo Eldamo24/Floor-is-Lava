@@ -45,6 +45,10 @@ public class PlayerBehaviour : MonoBehaviour
             case Tags.LavaGeiser:
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 break;
+            case Tags.Healer:
+                PlayerHeal(collisionedObject.GetComponent<HealthGiver>().health); 
+                break;
+
         }
     }
 
