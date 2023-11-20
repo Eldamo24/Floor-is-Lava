@@ -218,6 +218,17 @@
                     "action": "Grappling",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a518db80-5703-4530-840c-db6298098083",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Grappling",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

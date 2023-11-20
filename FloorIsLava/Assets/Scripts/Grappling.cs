@@ -9,13 +9,17 @@ public class Grappling : MonoBehaviour
     private Vector3 grapplePoint;
     public LayerMask whatIsGrappeable;
     public Transform gunTip, camera, player;
-    private float maxDistance = 600f;
+    private float maxDistance = 3000f;
     private SpringJoint joint;
     private bool isGrappling = false;
+    [SerializeField]
+    private Rigidbody body;
 
     private void Awake()
     {
         lr = GetComponent<LineRenderer>();
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        Debug.DrawLine(ray.origin, ray.direction);
     }
 
     private void Update()
@@ -31,9 +35,30 @@ public class Grappling : MonoBehaviour
 
     void StartGrapple()
     {
-        RaycastHit hit;
         Debug.Log("Intente Graplear");
-        if(Physics.Raycast(gunTip.position, camera.forward, out hit, maxDistance, whatIsGrappeable))
+        //Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        //if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, whatIsGrappeable))
+        //{
+        //    isGrappling = true;
+        //    Debug.Log("estoy grapleando con el stake");
+        //    grapplePoint = hit.point;
+        //    joint = player.gameObject.AddComponent<SpringJoint>();
+        //    joint.autoConfigureConnectedAnchor = false;
+        //    joint.connectedAnchor = grapplePoint;
+
+        //    float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+        //    joint.maxDistance = distanceFromPoint * 0.8f;
+        //    joint.minDistance = distanceFromPoint * 0.25f;
+
+        //    joint.spring = 4.5f;
+        //    joint.damper = 7f;
+        //    joint.massScale = 4.5f;
+
+        //    lr.positionCount = 2;
+        //    body.AddForce(new Vector3(0f, 10f, 10f), ForceMode.Impulse);
+        //}
+        RaycastHit hit;
+        if (Physics.Raycast(gunTip.position, camera.forward * maxDistance, out hit, maxDistance, whatIsGrappeable))
         {
             isGrappling = true;
             Debug.Log("estoy grapleando con el stake");
@@ -51,7 +76,9 @@ public class Grappling : MonoBehaviour
             joint.massScale = 4.5f;
 
             lr.positionCount = 2;
+            body.AddForce(new Vector3(0f, 10f, 10f), ForceMode.Impulse);
         }
+
     }
 
     void DrawRope()
