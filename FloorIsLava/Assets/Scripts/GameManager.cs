@@ -112,6 +112,7 @@ public static class Tags
     public const string LavaGeiser = "LavaGeiser";
     public const string Platform = "Platform";
     public const string Stake = "Stake";
+    public const string Healer = "Healer";
 }
 
 public enum GameStatus
