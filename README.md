@@ -3,6 +3,7 @@ A third person game where you have to escape from an erupting volcano
 
 GameManager y control de estados del juego
 ```mermaid
+classDiagram
 
     class GameManager{
       <<singleton>>
@@ -53,6 +54,8 @@ GameManager y control de estados del juego
 
 Gameplay basico (movimiento, camara, colliders)
 ```mermaid
+classDiagram
+
     class CameraController{
         -CinemachineFreeLook _cineFL
         -GameObject _spectatorPov
@@ -195,6 +198,7 @@ classDiagram
 
 Mecánica de grappling
 ```mermaid
+classDiagram
 
     class RotateGun{
         +Grapping grappling
@@ -230,6 +234,8 @@ Mecánica de grappling
 
 UI
 ```mermaid
+classDiagram
+
     class UiManager{
         -GameObject _uiGameOver:serialized
         -GameObject _uiGameplay:serialized
