@@ -74,6 +74,7 @@ classDiagram
 	class isGrounded{
         +bool grounded
         +UnityEvent<bool> OnFloorCollisionChanged
+	+GameObject player
 	-LayerMask layer
 	+CheckGround()
         
