@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NewGame(string str)
+    public void LoadScene(string str)
     {
         SceneManager.LoadScene(str);
     }
