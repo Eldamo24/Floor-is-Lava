@@ -1,60 +1,8 @@
 # Floor-is-Lava
 A third person game where you have to escape from an erupting volcano
 
+GameManager y control de estados del juego
 ```mermaid
-
-classDiagram
-
-	class MonoBehaviour{
-	}
-
-    class IEnemyDamage{
-    <<interface>>
-    +int damage:prop
-    }
-
-    class CameraController{
-        -CinemachineFreeLook _cineFL
-        -GameObject _spectatorPov
-        -GameObject _spectatorTarget
-        -int _cameraFov
-        +GameObject CurrentTransformCamFollow : prop
-        +GameObject CurrentTransformCamLookAt : prop
-        +int CameraFov
-        -void Start()
-        -void OnGameStatusChanged(GameStatus) 
-        -IEnumerator SetGameOverCamera()
-        -IEnumerator FindCinemachineFreeLook()
-        -void LockCamera(bool)
-        }
-
-    class GameStatus{
-    <<enum>>
-    Playing,
-    Paused,
-    GameOver,
-    OnLevelEnd,
-    OnMenu
-
-    }
-
-    class GameScenes{
-        <<enum>>
-        MainMenu,
-        Level1,
-        Level2
-    }
-
-    class Tags{
-        <<static>>
-        +string LavaFloor
-        +string Rock
-        +string Bat
-        +string LavaGeiser
-        +string Platform
-        +string Stake
-        +string Healer 
-    }
 
     class GameManager{
       <<singleton>>
@@ -72,6 +20,116 @@ classDiagram
       +LoadMainMenu()
       +ExitGame()
       +Pause()
+    }
+
+    class GameStatus{
+    <<enum>>
+    Playing,
+    Paused,
+    GameOver,
+    OnLevelEnd,
+    OnMenu
+
+    }
+
+    class GameScenes{
+        <<enum>>
+        MainMenu,
+        Level1,
+        Level2
+    }
+	
+    class UnitHealth{
+        -int _currentHealth
+        -int _currentMaxHealth
+        +int Health:prop
+        +int MaxHealth:prop
+        +UnitHealth(int,int)
+        +DmgUnit(int)
+        +HealUnit(int)
+    }
+
+```
+
+Gameplay basico (movimiento, camara, colliders)
+```mermaid
+    class CameraController{
+        -CinemachineFreeLook _cineFL
+        -GameObject _spectatorPov
+        -GameObject _spectatorTarget
+        -int _cameraFov
+        +GameObject CurrentTransformCamFollow : prop
+        +GameObject CurrentTransformCamLookAt : prop
+        +int CameraFov
+        -void Start()
+        -void OnGameStatusChanged(GameStatus) 
+        -IEnumerator SetGameOverCamera()
+        -IEnumerator FindCinemachineFreeLook()
+        -void LockCamera(bool)
+        }
+		
+	class isGrounded{
+        +bool isOnFloor
+        +UnityEvent<bool> OnFloorCollisionChanged
+        -OnCollisionEnter(Collision)
+        -OnCollisionExit(Collision)
+    }
+
+	    class PlayerBehaviour{
+        -HealthBar _healthBar
+        +bool IsDead:prop
+        -Update()
+        +OnTriggerEnter(Collider)
+        +OnCollisionEnter(Collision)
+        -FixedUpdate()
+        -PlayerTakeDmg(int)
+        -PlayerHeal(int)
+    }
+	
+    class RigidBodyMovement{
+        +Transform orientation
+        +Transform player
+        +Transform playerObj
+        +Rigidbody rb
+        +GameObject playe
+        -Animator anim:serialized
+        -Vector2 input
+        -PlayerInput playerInput
+        +float rotationSpeed
+        -float upForce:serialized
+        -float playerSpeed:serialized
+        +bool IsMovementAllowed:prop
+        -Start()
+        -Update()
+        +Jump(CallbackContext)
+        -setJumpingAnimation(bool)
+        +Pause()
+    }
+	
+	class PlayerMovement{
+        <<pending>>
+    }
+
+```
+
+Daños del entorno
+```mermaid
+classDiagram
+
+    class Tags{
+        <<static>>
+        +string LavaFloor
+        +string Rock
+        +string Bat
+        +string LavaGeiser
+        +string Platform
+        +string Stake
+        +string Healer 
+    }
+
+    class IEnemyDamage{
+    <<interface>>
+    +int damage:prop
     }
 
     class GeiserCreation{
@@ -94,47 +152,11 @@ classDiagram
         -Start()
     }
 
-    class Grappling{
-        -LineRenderer Ir
-        -Vector3 grapplePoint
-        +LayerMask whatisGrappeable
-        +Transform gunTip
-        +Transfor camera
-        +Transform _playerHealth
-        -float maxDistance
-        -SpringJoint joint
-        -bool isGrappling
-        -Rigidbody body
-        -Awake()
-        -Update()
-        -LateUpdate()
-        -StartGrapple()
-        -DrawRope()
-        -StopGrapple()
-        +IsGrappling() : bool
-        +GetGrapplePoint() : Vector3
-        +Grap(CallbackContext)
-    }
-
-    class HealthBar{
-        -Slider _healthSlider
-        -Start()
-        +SetMaxHealth(int)
-        +SetHealth(int)
-    }
-
     class HealthGiver{
         +int health
         -Start()
         -Update()
         -OnTriggerEnter(Collider)
-    }
-
-    class isGrounded{
-        +bool isOnFloor
-        +UnityEvent<bool> OnFloorCollisionChanged
-        -OnCollisionEnter(Collision)
-        -OnCollisionExit(Collision)
     }
 
     IEnemyDamage<|-- LavaFloorBehaviour : Implements
@@ -164,65 +186,50 @@ classDiagram
         +int damage:prop
     }
 
-    class PlayerBehaviour{
-        -HealthBar _healthBar
-        +bool IsDead:prop
-        -Update()
-        +OnTriggerEnter(Collider)
-        +OnCollisionEnter(Collision)
-        -FixedUpdate()
-        -PlayerTakeDmg(int)
-        -PlayerHeal(int)
-    }
-
-    class PlayerMovement{
-        <<pending>>
-    }
-
-    class ray{
-        -Update()
-    }
-
-    class RigidBodyMovement{
-        +Transform orientation
-        +Transform player
-        +Transform playerObj
-        +Rigidbody rb
-        +GameObject playe
-        -Animator anim:serialized
-        -Vector2 input
-        -PlayerInput playerInput
-        +float rotationSpeed
-        -float upForce:serialized
-        -float playerSpeed:serialized
-        +bool IsMovementAllowed:prop
-        -Start()
-        -Update()
-        +Jump(CallbackContext)
-        -setJumpingAnimation(bool)
-        +Pause()
-    }
-
     class RockFall{
         -GameObject rock:serialized
         -OnTriggerEnter(Collider)
     }
+
+```
+
+Mecánica de grappling
+```mermaid
 
     class RotateGun{
         +Grapping grappling
         -Update()
     }
 
-    class TextBar{
-        +HealthBar healthBar:serialized
-        -Text text
-        -Slider sliderBar
-        -Image image
-        -AudioSource audioSource
-        -Start()
+    class ray{
         -Update()
     }
+	
+	class Grappling{
+        -LineRenderer Ir
+        -Vector3 grapplePoint
+        +LayerMask whatisGrappeable
+        +Transform gunTip
+        +Transfor camera
+        +Transform _playerHealth
+        -float maxDistance
+        -SpringJoint joint
+        -bool isGrappling
+        -Rigidbody body
+        -Awake()
+        -Update()
+        -LateUpdate()
+        -StartGrapple()
+        -DrawRope()
+        -StopGrapple()
+        +IsGrappling() : bool
+        +GetGrapplePoint() : Vector3
+        +Grap(CallbackContext)
+    }
+```
 
+UI
+```mermaid
     class UiManager{
         -GameObject _uiGameOver:serialized
         -GameObject _uiGameplay:serialized
@@ -241,14 +248,21 @@ classDiagram
         +SetCursorVisible()
         +SetCursorInvisible()
     }
-
-    class UnitHealth{
-        -int _currentHealth
-        -int _currentMaxHealth
-        +int Health:prop
-        +int MaxHealth:prop
-        +UnitHealth(int,int)
-        +DmgUnit(int)
-        +HealUnit(int)
+	
+	class TextBar{
+        +HealthBar healthBar:serialized
+        -Text text
+        -Slider sliderBar
+        -Image image
+        -AudioSource audioSource
+        -Start()
+        -Update()
+    }
+	
+	class HealthBar{
+        -Slider _healthSlider
+        -Start()
+        +SetMaxHealth(int)
+        +SetHealth(int)
     }
 ```
