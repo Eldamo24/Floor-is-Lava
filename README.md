@@ -196,6 +196,11 @@ classDiagram
         -OnTriggerEnter(Collider)
     }
 
+     class FallingPlatform{
+        -Animator anim
+        -OnCollisionEnter(Collision)
+    }
+
 ```
 
 Mecánica de grappling
