@@ -5,24 +5,44 @@ using UnityEngine.Events;
 
 public class isGrounded : MonoBehaviour
 {
-    public bool isOnFloor;
+    [SerializeField]
+    public bool grounded;
+    [SerializeField]
+    private LayerMask layer;
     public UnityEvent<bool> OnFloorCollisionChanged;
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Platform")
+    //    {
+    //        this.isOnFloor = true;
+    //        OnFloorCollisionChanged.Invoke(true);
+    //    }
+    //}
+
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "Platform")
+    //    {
+    //        this.isOnFloor = false;
+    //        OnFloorCollisionChanged.Invoke(false);
+    //    }
+
+    //}
+
+    public void CheckGround()
     {
-        if (collision.gameObject.tag == "Platform")
+        RaycastHit hit = new RaycastHit();
+        Debug.DrawRay(transform.position, Vector3.down * 0.6f, Color.green);
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, 0.6f, layer))
         {
-            this.isOnFloor = true;
+            grounded = true;
             OnFloorCollisionChanged.Invoke(true);
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Platform")
+        else
         {
-            this.isOnFloor = false;
+            grounded = false;
             OnFloorCollisionChanged.Invoke(false);
         }
-
     }
+
 }
