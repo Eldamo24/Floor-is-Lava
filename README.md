@@ -72,10 +72,11 @@ classDiagram
         }
 		
 	class isGrounded{
-        +bool isOnFloor
+        +bool grounded
         +UnityEvent<bool> OnFloorCollisionChanged
-        -OnCollisionEnter(Collision)
-        -OnCollisionExit(Collision)
+	-LayerMask layer
+	+CheckGround()
+        
     }
 
 	    class PlayerBehaviour{
