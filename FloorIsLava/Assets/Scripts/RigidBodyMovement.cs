@@ -47,6 +47,7 @@ public class RigidBodyMovement : MonoBehaviour
     {
         if (IsMovementAllowed)
         {
+            play.GetComponent<isGrounded>().CheckGround();
             anim.SetBool("IsRunning", false);
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
@@ -66,7 +67,7 @@ public class RigidBodyMovement : MonoBehaviour
 
         if (callbackContext.performed)
         {
-            if (play.GetComponent<isGrounded>().isOnFloor)
+            if (play.GetComponent<isGrounded>().grounded)
             {
                 rb.AddForce(Vector3.up * upForce);
             }
