@@ -9,6 +9,8 @@ public class isGrounded : MonoBehaviour
     public bool grounded;
     [SerializeField]
     private LayerMask layer;
+    [SerializeField]
+    private GameObject player;
     public UnityEvent<bool> OnFloorCollisionChanged;
     //private void OnCollisionEnter(Collision collision)
     //{
@@ -32,8 +34,8 @@ public class isGrounded : MonoBehaviour
     public void CheckGround()
     {
         RaycastHit hit = new RaycastHit();
-        Debug.DrawRay(transform.position, Vector3.down * 0.6f, Color.green);
-        if (Physics.Raycast(transform.position, -Vector3.up, out hit, 0.6f, layer))
+        Debug.DrawRay(player.transform.position, Vector3.down * 0.6f, Color.green);
+        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.6f, layer))
         {
             grounded = true;
             OnFloorCollisionChanged.Invoke(true);
