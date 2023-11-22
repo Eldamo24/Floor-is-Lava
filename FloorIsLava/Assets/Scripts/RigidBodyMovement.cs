@@ -14,7 +14,6 @@ public class RigidBodyMovement : MonoBehaviour
     public Transform playerObj;
     public Rigidbody rb;
     public GameObject play;
-    private GameManager gameManager;
     [SerializeField]
     private Animator anim;
 
@@ -39,7 +38,6 @@ public class RigidBodyMovement : MonoBehaviour
     {
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
         //upForce = 290f;
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         play.GetComponent<isGrounded>().OnFloorCollisionChanged.AddListener(setJumpingAnimation);
 
     }
