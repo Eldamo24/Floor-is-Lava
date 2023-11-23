@@ -23,7 +23,24 @@ public class RigidBodyMovement : MonoBehaviour
     [SerializeField]
     private float upForce = 290f;
     [SerializeField]
-    private float playerSpeed = 4f;
+    private float _playerSpeed = 4f;
+    
+    public bool IsDescending
+    {
+        get
+        {
+            return rb.velocity.y < 0;
+        }
+    }
+    public float PlayerSpeed
+    {
+        get
+        {
+            if (IsDescending) return _playerSpeed / 2;
+            return _playerSpeed;
+        }
+        private set { _playerSpeed = value; }
+    }
 
     public bool IsMovementAllowed
     {
@@ -47,7 +64,6 @@ public class RigidBodyMovement : MonoBehaviour
     {
         if (IsMovementAllowed)
         {
-            play.GetComponent<isGrounded>().CheckGround();
             anim.SetBool("IsRunning", false);
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             orientation.forward = viewDir.normalized;
@@ -57,7 +73,7 @@ public class RigidBodyMovement : MonoBehaviour
             {
                 anim.SetBool("IsRunning", true);
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-                rb.MovePosition(player.position + inputDir * Time.deltaTime * playerSpeed);
+                rb.MovePosition(player.position + inputDir * Time.deltaTime * PlayerSpeed); 
             }
         }
     }
@@ -70,6 +86,7 @@ public class RigidBodyMovement : MonoBehaviour
             if (play.GetComponent<isGrounded>().grounded)
             {
                 rb.AddForce(Vector3.up * upForce);
+                anim.SetBool("Jumping", true);
             }
 
         }
@@ -78,7 +95,10 @@ public class RigidBodyMovement : MonoBehaviour
 
     private void setJumpingAnimation(bool isOnFloor)
     {
-        anim.SetBool("Jumping", !isOnFloor);
+        if(isOnFloor && anim.GetBool("Jumping") == true)
+        {
+            anim.SetBool("Jumping", !isOnFloor);
+        }
     }
 
     public void Pause()

@@ -31,19 +31,25 @@ public class isGrounded : MonoBehaviour
 
     //}
 
-    public void CheckGround()
+    public void Update()
     {
         RaycastHit hit = new RaycastHit();
-        Debug.DrawRay(player.transform.position, Vector3.down * 0.6f, Color.green);
-        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.6f, layer))
+        Debug.DrawRay(player.transform.position, Vector3.down * 0.3f, Color.green);
+        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.3f, layer))
         {
-            grounded = true;
-            OnFloorCollisionChanged.Invoke(true);
-        }
-        else
+            if (!grounded)
+            {
+                grounded =! grounded;
+                OnFloorCollisionChanged.Invoke(true);
+            }
+
+        }else
         {
-            grounded = false;
-            OnFloorCollisionChanged.Invoke(false);
+            if (grounded)
+            {
+                grounded = !grounded;
+                OnFloorCollisionChanged.Invoke(false);
+            }
         }
     }
 
