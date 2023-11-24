@@ -72,11 +72,11 @@ classDiagram
         }
 		
 	class isGrounded{
-        +bool grounded
+        +bool grounded:serialized
         +UnityEvent<bool> OnFloorCollisionChanged
-	+GameObject player
-	-LayerMask layer
-	+CheckGround()
+	    +GameObject player:serialized
+	    -LayerMask layer:serialized
+	    +Update()
         
     }
 
@@ -96,13 +96,15 @@ classDiagram
         +Transform player
         +Transform playerObj
         +Rigidbody rb
-        +GameObject playe
+        +GameObject play
         -Animator anim:serialized
         -Vector2 input
         -PlayerInput playerInput
         +float rotationSpeed
         -float upForce:serialized
-        -float playerSpeed:serialized
+        -float _playerSpeed:serialized
+        +bool IsDescending:prop
+        +float PlayerSpeed:prop
         +bool IsMovementAllowed:prop
         -Start()
         -Update()
