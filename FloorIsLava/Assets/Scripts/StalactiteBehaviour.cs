@@ -8,7 +8,35 @@ public class StalactiteBehaviour : MonoBehaviour, IEnemyDamage
 
     private void Start()
     {
-        damage = 25;
+        damage = 10;
+    }
+
+    // This exists only in order to detect when stalactite is grounded.
+    // I can't use a collision with a "Platform" tagged object because, in this game, stalactites begin in contact with that kind of object.
+    // In my case, the trigger for the stalactite to start falling is also the one that disables the damage once the stalactite hits the ground.
+    public void OnTriggerEnter(Collider other)
+    {
+        GameObject collisionedObject = other.gameObject;
+        if (collisionedObject.tag==Tags.StalactiteGround && gameObject.tag != "Untagged")
+            StartCoroutine(DisarmeStallactite(collisionedObject));
+    }
+
+    // With this I intend to "disarm" the damage capacity of the stalactite (one second after the collision occurs).
+    IEnumerator DisarmeStallactite(GameObject collisionedObject)
+    {
+        yield return new WaitForSeconds(1); // Waits one second
+        // This must be de first and last time that stalatite is "disarmed"
+        collisionedObject.tag   = "Untagged";
+        transform.gameObject.tag = "Untagged";
+        damage = 0; // Perhaps this is not so necessary and a bit redundant.
+        
+        // The first MeshCollider is present in the parent (initially disabled), a second meshcollider is present in the child (initially enabled).
+        // The first one has the stalactite form, the second one is bigger than stalactite (it represents a "damage zone")
+        // At this point, we must enable the first and disable the second ().
+        Component[] meshColliderArray = GetComponentsInChildren<MeshCollider>();
+        foreach (MeshCollider status in meshColliderArray)
+            status.enabled = !(status.enabled);        
     }
 
 }
+
