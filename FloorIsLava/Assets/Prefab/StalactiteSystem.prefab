@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 4585477183543655212}
   - component: {fileID: 1922718605620313354}
   - component: {fileID: 3106240315630474504}
+  - component: {fileID: 6494316426102744421}
   m_Layer: 0
   m_Name: ConicFormStalactite
   m_TagString: Rock
@@ -1166,6 +1167,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f6af8a1fecabf05ba48c967072178a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &6494316426102744421
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3721722799173378323}
+  serializedVersion: 4
+  m_Mass: 1000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5255924522962196097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1205,7 @@ GameObject:
   - component: {fileID: 6076487902620925582}
   - component: {fileID: 5426768801680269199}
   - component: {fileID: 8817779401177338798}
-  - component: {fileID: 2819196757742059656}
+  - component: {fileID: 6828078745379867638}
   m_Layer: 0
   m_Name: StalactiteTrigger
   m_TagString: StalactiteGround
@@ -1230,7 +1258,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2819196757742059656
+--- !u!114 &6828078745379867638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1239,10 +1267,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5255924522962196097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d559e5325588413458cd455e87e2d405, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fa3e240220df22db97866bd101d5dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rock: {fileID: 3721722799173378323}
+  fallingBody: {fileID: 3721722799173378323}
 --- !u!1 &7212312083532580357
 GameObject:
   m_ObjectHideFlags: 0
