@@ -12,6 +12,7 @@ public class Grappling : MonoBehaviour
     private float maxDistance = 3000f;
     private SpringJoint joint;
     private bool isGrappling = false;
+    private float speed = 5f;
     [SerializeField]
     private Rigidbody body;
 
@@ -22,9 +23,13 @@ public class Grappling : MonoBehaviour
         Debug.DrawLine(ray.origin, ray.direction);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        
+        if (isGrappling)
+        {
+            float step = speed * Time.deltaTime;
+            GameObject.Find("Player").GetComponent<Transform>().position = Vector3.MoveTowards(GameObject.Find("Player").GetComponent<Transform>().position, grapplePoint, step);
+        }
         
     }
 
@@ -76,7 +81,8 @@ public class Grappling : MonoBehaviour
             joint.massScale = 4.5f;
 
             lr.positionCount = 2;
-            body.AddForce(new Vector3(0f, 10f, 10f), ForceMode.Impulse);
+          //  
+            
         }
 
     }
