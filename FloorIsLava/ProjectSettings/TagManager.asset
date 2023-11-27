@@ -11,6 +11,8 @@ TagManager:
   - Rock
   - LavaFloor
   - Healer
+  - BatTrigger
+  - Damager
   layers:
   - Default
   - TransparentFX
