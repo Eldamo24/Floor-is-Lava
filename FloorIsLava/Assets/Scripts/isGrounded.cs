@@ -34,8 +34,8 @@ public class isGrounded : MonoBehaviour
     public void Update()
     {
         RaycastHit hit = new RaycastHit();
-        Debug.DrawRay(player.transform.position, Vector3.down * 0.3f, Color.green);
-        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.3f, layer))
+        Debug.DrawRay(player.transform.position, Vector3.down * 0.2f, Color.green);
+        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.2f, layer))
         {
             if (!grounded)
             {
