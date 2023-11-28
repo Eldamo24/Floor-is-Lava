@@ -60,7 +60,7 @@ public class RigidBodyMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (IsMovementAllowed)
         {
