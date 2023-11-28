@@ -11,6 +11,7 @@ TagManager:
   - Rock
   - LavaFloor
   - Healer
+  - StalactiteGround
   layers:
   - Default
   - TransparentFX
