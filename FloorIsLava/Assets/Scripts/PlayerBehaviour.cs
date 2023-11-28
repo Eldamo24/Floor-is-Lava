@@ -42,7 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 gameObject.GetComponent<Rigidbody>().useGravity = false;
                 break;
-            case Tags.LavaGeiser:
+            case Tags.Damager:
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 break;
             case Tags.Healer:
@@ -58,7 +58,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         switch (collisionedObject.tag)
         {
-            case Tags.Rock:
+            case Tags.Damager:
                 PlayerTakeDmg(collisionedObject.GetComponent<IEnemyDamage>().damage);
                 break;
         }
