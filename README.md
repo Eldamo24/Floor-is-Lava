@@ -153,6 +153,12 @@ classDiagram
         -Start()
     }
 
+ IEnemyDamage<|--BatBehaviour : Implements
+    class BatBehaviour{
+        +int damage:prop
+        -Start()
+    }
+
     IEnemyDamage<|--GiantRockBehaviour : Implements
     class GiantRockBehaviour{
         +int damage:prop
@@ -196,6 +202,12 @@ classDiagram
     class RockFall{
         -GameObject rock:serialized
         -OnTriggerEnter(Collider)
+    }
+
+    class BatMovement{
+	-float speed:serialized
+	-Update()
+	-OnTriggerEnter(Collider)
     }
 
      class FallingPlatform{
