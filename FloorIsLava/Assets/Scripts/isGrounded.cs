@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class isGrounded : MonoBehaviour
 {
-    [SerializeField]
     public bool grounded;
     [SerializeField]
     private LayerMask layer;

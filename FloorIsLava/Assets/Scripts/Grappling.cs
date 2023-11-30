@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class Grappling : MonoBehaviour
 {
@@ -11,10 +12,21 @@ public class Grappling : MonoBehaviour
     public Transform gunTip, camera, player;
     private float maxDistance = 3000f;
     private SpringJoint joint;
-    private bool isGrappling = false;
+    public bool isGrappling = false;
     private float speed = 5f;
     [SerializeField]
     private Rigidbody body;
+
+    private float Spring
+    {
+        set
+        {
+            if(joint != null)
+            {
+                joint.spring = value;
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -65,9 +77,12 @@ public class Grappling : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(gunTip.position, camera.forward * maxDistance, out hit, maxDistance, whatIsGrappeable))
         {
+            GameObject hitObject = hit.collider.gameObject;
+            GameObject jointImpact = hitObject.transform.GetChild(0).gameObject;
+
             isGrappling = true;
             Debug.Log("estoy grapleando con el stake");
-            grapplePoint = hit.point;
+            grapplePoint = jointImpact.transform.position;
             joint = player.gameObject.AddComponent<SpringJoint>();
             joint.autoConfigureConnectedAnchor = false;
             joint.connectedAnchor = grapplePoint;
@@ -107,9 +122,9 @@ public class Grappling : MonoBehaviour
         return joint != null;
     }
 
-    public Vector3 GetGrapplePoint()
+    public Vector3 GetGrapplePoint
     {
-        return grapplePoint;
+        get { return grapplePoint; }
     }
 
     public void Grap(InputAction.CallbackContext callbackContext)
@@ -130,5 +145,35 @@ public class Grappling : MonoBehaviour
             
     }
         
+    
+    public void OnEndingGrappleAction(Rigidbody rb)
+    {
+        //impido que el joint me entorpezca cualquier intento de movimiento siguiente
+        Spring = 0f;
 
+        try
+        {
+            //le doy un impulso hacia arriba
+
+            rb.AddForce(Vector3.up * 10, ForceMode.Force);
+            //rb.AddRelativeForce(new Vector3(GetGrapplePoint.x, GetGrapplePoint.y + 2, GetGrapplePoint.z), ForceMode.Force);
+            //rb.AddRelativeForce(new Vector3(GetGrapplePoint.x, GetGrapplePoint.y+6, GetGrapplePoint.z), ForceMode.Acceleration)
+            //rb.AddExplosionForce(10, Vector3.down, 10);
+            Debug.Log("AddForce desde OnEndingGrappleAction");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.ToString());
+        }
+        //necesito que siga estando isGrappling = true por unos frames más sino acumula poco addForce así que lo hago async
+        StartCoroutine(AsyncStopGrapple(.9f));
+
+    }
+
+    IEnumerator AsyncStopGrapple(float waitTime)
+    {
+        StopGrapple();
+        yield return new WaitForSecondsRealtime(waitTime);
+        isGrappling = false;
+    }
 }
