@@ -63,7 +63,7 @@ public class PlayerBehaviour : MonoBehaviour
             case Tags.Platform:
                 if (_grapplingScript.isGrappling && !_isGrounded.grounded)
                 {
-                    Debug.Log("tgrEnter de platform atascado");
+                    //Debug.Log("tgrEnter de platform atascado");
                     //_rb.AddForce(Vector3.up * 300, ForceMode.VelocityChange);
                     _rb.AddExplosionForce(100, Vector3.up, 10);
                 }
@@ -82,6 +82,8 @@ public class PlayerBehaviour : MonoBehaviour
             case Tags.Platform:
                 if (_grapplingScript.isGrappling && !_isGrounded.grounded)
                 {
+                    //Debug.Log("tgrStay de platform atascado");
+
                     _grapplingScript.OnEndingGrappleAction(_rb);
                 }
                 break;

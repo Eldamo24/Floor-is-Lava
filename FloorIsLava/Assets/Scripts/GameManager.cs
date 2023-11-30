@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
     public UnityEvent<GameStatus> OnGameStatusChanged;
+    private float _defaultTimeScale = 1f;
 
     public GameStatus CurrentGameStatus
     {
@@ -27,9 +28,22 @@ public class GameManager : MonoBehaviour
         {
             _currentGameStatus = value;
             OnGameStatusChanged.Invoke(_currentGameStatus);
+
+            switch (value)
+            {
+                case GameStatus.Paused:
+                    TimeScale = 0f; break;
+                case GameStatus.Playing:
+                    TimeScale = _defaultTimeScale; break;
+            }
         }
     }
 
+    public float TimeScale
+    {
+        get { return Time.timeScale; }
+        set { Time.timeScale = value; }
+    }
     public static GameManager gameManager { get; private set; } //para hacer singleton al GameManager
     private void Awake()
     {
@@ -51,9 +65,10 @@ public class GameManager : MonoBehaviour
             case "MainMenu":
                 CurrentGameStatus = GameStatus.OnMenu;
                 break;
-        }
+        }   
 
     }
+
 
     public void Update()
     {
@@ -101,6 +116,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
 
 }
 
