@@ -31,7 +31,7 @@ public class isGrounded : MonoBehaviour
 
     //}
 
-    public void Update()
+    public void LateUpdate()
     {
         RaycastHit hit = new RaycastHit();
         Debug.DrawRay(player.transform.position, Vector3.down * 0.2f, Color.green);
