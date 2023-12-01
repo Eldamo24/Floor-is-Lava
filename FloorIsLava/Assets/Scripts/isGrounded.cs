@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class isGrounded : MonoBehaviour
 {
+    [SerializeField]
     public bool grounded;
     [SerializeField]
     private LayerMask layer;
@@ -30,11 +31,11 @@ public class isGrounded : MonoBehaviour
 
     //}
 
-    public void LateUpdate()
+    public void Update()
     {
         RaycastHit hit = new RaycastHit();
-        Debug.DrawRay(player.transform.position, Vector3.down * 0.2f, Color.green);
-        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.2f, layer))
+        Debug.DrawRay(player.transform.position, Vector3.down * 0.3f, Color.green);
+        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, 0.3f, layer))
         {
             if (!grounded)
             {

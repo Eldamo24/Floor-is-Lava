@@ -21,9 +21,9 @@ public class RigidBodyMovement : MonoBehaviour
     private PlayerInput playerInput;
     public float rotationSpeed = 7f;
     [SerializeField]
-    private float upForce;
+    private float upForce = 290f;
     [SerializeField]
-    private float _playerSpeed;
+    private float _playerSpeed = 4f;
     
     public bool IsDescending
     {
