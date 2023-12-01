@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+
+    private Grappling _grapplingScript;
+    private isGrounded _isGrounded;
+    private Rigidbody _rb;
     [SerializeField] HealthBar _healthBar;
     public bool IsDead
     {
@@ -14,21 +18,28 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+
+        _grapplingScript = Component.FindAnyObjectByType<Grappling>();
+        _isGrounded = Component.FindAnyObjectByType<isGrounded>();
+        _rb = GetComponent<Rigidbody>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            PlayerTakeDmg(20);
-            Debug.Log(GameManager.gameManager._playerHealth.Health);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            PlayerHeal(10);
-            Debug.Log(GameManager.gameManager._playerHealth.Health);
-        }
+        //if(Input.GetKeyDown(KeyCode.LeftAlt))
+        //{
+           
+        //    _rb.AddExplosionForce(1000, Vector3.down, 10);
+        //}
+        //if (Input.GetKeyDown(KeyCode.LeftControl))
+        //{
+        //    _grapplingScript.OnEndingGrappleAction(_rb);
+        //}
 
-        
+
     }
 
 
@@ -47,6 +58,34 @@ public class PlayerBehaviour : MonoBehaviour
                 break;
             case Tags.Healer:
                 PlayerHeal(collisionedObject.GetComponent<HealthGiver>().health); 
+                break;
+            case Tags.Stake:
+            case Tags.Platform:
+                if (_grapplingScript.isGrappling && !_isGrounded.grounded)
+                {
+                    //Debug.Log("tgrEnter de platform atascado");
+                    //_rb.AddForce(Vector3.up * 300, ForceMode.VelocityChange);
+                    _rb.AddExplosionForce(100, Vector3.up, 10);
+                }
+            break;
+
+        }
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        GameObject collisionedObject = other.gameObject;
+
+        switch (collisionedObject.tag)
+        {
+            case Tags.Stake:
+            case Tags.Platform:
+                if (_grapplingScript.isGrappling && !_isGrounded.grounded)
+                {
+                    //Debug.Log("tgrStay de platform atascado");
+
+                    _grapplingScript.OnEndingGrappleAction(_rb);
+                }
                 break;
 
         }
