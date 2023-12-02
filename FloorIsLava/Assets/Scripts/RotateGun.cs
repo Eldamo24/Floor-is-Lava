@@ -9,6 +9,6 @@ public class RotateGun : MonoBehaviour
     private void Update()
     {
         if (!grappling.IsGrappling()) return;
-        transform.LookAt(grappling.GetGrapplePoint());
+        transform.LookAt(grappling.GrapplePoint);
     }
 }

@@ -229,6 +229,17 @@
                     "action": "Grappling",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e02624c1-1467-4898-88c7-74c63bd609af",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grappling",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
