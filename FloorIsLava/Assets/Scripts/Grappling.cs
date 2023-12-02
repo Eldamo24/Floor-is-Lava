@@ -63,11 +63,6 @@ public class Grappling : MonoBehaviour
                                                 , step);
         }
 
-        if (Player.GetComponent<Rigidbody>().velocity.y > 0)
-        {
-            Debug.Log($"Longitud de joint{JointLenght.ToString()} \n Velocidad en Y {Player.GetComponent<Rigidbody>().velocity.y.ToString()}");
-
-        }
     }
 
     private void LateUpdate()
