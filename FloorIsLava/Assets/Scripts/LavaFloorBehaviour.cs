@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 {
     //fields
     Vector3 _startingPosition;
     [SerializeField]
-    private float _velocityMultiplier = 1.0f;
+    private float _upwardsSpeed;
     [SerializeField]
     private float _gameOverVelocityMultiplier;
     [SerializeField]
@@ -16,25 +17,68 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
     private bool _levelFilled = false;
     [SerializeField]
     private int _levelFilledYPosition;
+    [SerializeField]
+    private LavaVelocity lavaVelocity;
+
 
     //Properties
     public Vector3 CurrentPosition { get { return transform.position;} set { transform.position = value; } }
 
     public Vector3 StartingPosition { get { return _startingPosition; } private set { _startingPosition = value; } }
 
-    public float VelocityMultiplier { get { return _velocityMultiplier; } set { _velocityMultiplier = value; } }
+    public Vector3 PlayerPosition { get { return GameObject.Find("Player").GetComponent<Transform>().position; } }  
+
+    public Vector3 SelfPosition { get { return gameObject.GetComponent<Transform>().position; } }
+
+    public bool IsPlayerWithinRange { get { return Mathf.Abs(PlayerPosition.y - SelfPosition.y) > 5 ; } }
+    public float VelocityMultiplier
+    {
+        get
+        {
+            if(GameManager.gameManager.CurrentGameStatus.Equals(GameStatus.GameOver))
+            {
+                //juego terminado entonces rellenar de lava a las chapas
+                Debug.Log("GAMEOVERFAST");
+                return lavaVelocity.GameOverFast;
+            }else if(IsPlayerWithinRange){
+                //rubberbanding: si el player esta muy lejos, llenarse al doble de rapido
+                Debug.Log("FAST");
+                return lavaVelocity.Fast;
+            }
+            else
+            {
+                Debug.Log("NORMAL");
+                return lavaVelocity.Normal;
+            }
+        }
+    }
 
     public int damage { get;set; }
+    public class LavaVelocity
+    {
+        float normal;
 
+        public LavaVelocity(float normalSpeed)
+        {
+            this.normal = normalSpeed;
+        }
+
+        public float Normal { get { return normal * 0.15f; } }
+        public float Fast { get { return normal *2; } }
+        public float GameOverFast { get { return normal * 15f; } }
+    }
+    
     private void Start()
     {
         GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
 
     }
+    
     private void Awake()
     {
         StartingPosition = CurrentPosition;
         damage = 1000;
+        lavaVelocity = new LavaVelocity(_upwardsSpeed);
     }
 
     private void Update()
@@ -58,14 +102,12 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         }
         if (Input.GetKeyDown(KeyCode.V))
         {
-            _velocityMultiplier *= 2;
+            _upwardsSpeed *= 2;
         }else if (Input.GetKeyUp(KeyCode.V))
         {
-            _velocityMultiplier /= 2;
+            _upwardsSpeed /= 2;
         }
     }
-
-
 
     public void RestartPosition()
     {
@@ -84,14 +126,9 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         CurrentPosition = position;
     }
 
-    public void IncreaseYPosition(float multiplier)
-    {
-        transform.Translate((Vector3.up * multiplier) * Time.deltaTime, Space.World);
-    }
-
     public void IncreaseYPosition()
     {
-        IncreaseYPosition(_velocityMultiplier);
+        transform.Translate(Vector3.up * VelocityMultiplier * Time.deltaTime, Space.World);
     }
 
     private void OnGameStatusChanged(GameStatus newStatus)
@@ -105,7 +142,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
                 _frozenVelocity = false; 
                 break;
             case GameStatus.GameOver: 
-                _velocityMultiplier = _gameOverVelocityMultiplier; 
+                _upwardsSpeed = _gameOverVelocityMultiplier; 
                 break;
         }
     }
