@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
-    [SerializeField]
     private Animator anim;
 
-    private void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
     }
@@ -18,7 +17,7 @@ public class FallingPlatform : MonoBehaviour
             //Aqui iria el comienzo de la animacion de destruccion
             //Para luego destruir la plataforma
             anim.SetBool("IsDestroyed", true);
-            Destroy(this.gameObject, 5);
+           Destroy(this.gameObject, 10);
         }
     }
 }
