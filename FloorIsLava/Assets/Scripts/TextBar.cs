@@ -15,16 +15,26 @@ public class TextBar : MonoBehaviour
     Image image;
     AudioSource audioSource;
     // Start is called before the first frame update
-    void Start()
+
+    private void Start()
+    {
+        InitializeComponent();
+    }
+    void OnEnable()
+    {
+
+
+        InitializeComponent();
+
+    }
+
+    private void InitializeComponent()
     {
         text = GetComponent<Text>();
         healthBar = FindObjectOfType<HealthBar>();
         sliderBar = FindObjectOfType<Slider>();
         image = GameObject.Find("Canvas/UI-Gameplay/UI ProgressBar/BarFill/FillColor").GetComponent<Image>();
         audioSource = GameObject.Find("Canvas/UI-Gameplay/UI ProgressBar/BarFill/FillColor").GetComponent<AudioSource>();
-
-
-
     }
 
     // Update is called once per frame
