@@ -127,6 +127,9 @@ public class DescendingBehaviour : MonoBehaviour
         // I think looks better with a faster initial descent of 1.5 meters
         // But rigidbody physics are disabled, so I have to implement a "free fall".
         // In free fall y=g/2*T^2 -> dy = g*T*dT
+        T = 0;
+        deltaY = 0;
+        y = 0;
         do
         {            
             deltaT = Time.deltaTime;
