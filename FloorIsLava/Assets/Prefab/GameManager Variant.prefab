@@ -48,6 +48,78 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1ba4b30230ade964ea57c9817b7db635, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[0].name
+      value: jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: f0a27856612730342bc5ab543cd9f85c, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[1].name
+      value: walk
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a9b592fd4546df94388e206f69661506, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[2].name
+      value: damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 61de26b6fdd0029459fca56b46233423, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[3].name
+      value: dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 750429c480099b841853f3ace34bf8ed, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: sfxSounds.Array.data[4].name
+      value: rockFall
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 976e3986d86115d42b91039deacce035, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[0].name
+      value: menuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: bfe86a07c6af4fe48865de5b5bd7c8de, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[1].name
+      value: playingMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 40cc58e940ae6374fb679cdf7fe98c61, type: 3}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: musicSounds.Array.data[2].name
+      value: pauseMusic
+      objectReference: {fileID: 0}
     - target: {fileID: 6593687897884786800, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
       propertyPath: m_Name
       value: GameManager Variant
