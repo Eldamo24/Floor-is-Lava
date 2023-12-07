@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: musicSounds.Array.data[2].name
       value: pauseMusic
       objectReference: {fileID: 0}
+    - target: {fileID: 3433049219322375947, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
+      propertyPath: _musicSounds.Array.data[0].volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6593687897884786800, guid: 79674e5f2ba024a46a281d2f776806b3, type: 3}
       propertyPath: m_Name
       value: GameManager Variant

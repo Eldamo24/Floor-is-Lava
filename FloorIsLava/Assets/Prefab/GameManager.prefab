@@ -484,7 +484,7 @@ MonoBehaviour:
   _musicSounds:
   - name: playing
     clip: {fileID: 8300000, guid: bfe86a07c6af4fe48865de5b5bd7c8de, type: 3}
-    volume: 0
+    volume: 1
     pitch: 1
   - name: pause
     clip: {fileID: 8300000, guid: 40cc58e940ae6374fb679cdf7fe98c61, type: 3}
