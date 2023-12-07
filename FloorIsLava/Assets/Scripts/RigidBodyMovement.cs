@@ -87,6 +87,7 @@ public class RigidBodyMovement : MonoBehaviour
             {
                 rb.AddForce(Vector3.up * upForce);
                 anim.SetBool("Jumping", true);
+                AudioManager.Instance.PlaySFX("jump");
             }
 
         }

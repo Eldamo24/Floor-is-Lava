@@ -14,6 +14,7 @@ public class RockFall : MonoBehaviour
             if(rock.GetComponent<Rigidbody>() == null)
             {
                 Rigidbody rb = rock.AddComponent<Rigidbody>();
+                rock.GetComponent<AudioSource>().Play();
                 rb.mass = 300;
             }
         }

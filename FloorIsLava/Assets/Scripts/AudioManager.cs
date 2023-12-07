@@ -7,8 +7,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
-    public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource,alternateSource;
+    public Sound[] _musicSounds, _sfxSounds;
+    public AudioSource _musicSource, _sfxSource, _alternateSource;
 
     private void Awake()
     {
@@ -34,10 +34,10 @@ public class AudioManager : MonoBehaviour
         switch (status)
         {
             case GameStatus.OnMenu:
-                PlayMusic("menuMusic");
+                PlayMusic("menu");
                 break;
             case GameStatus.Playing:
-                PlayMusic("playingMusic");
+                PlayMusic("playing");
                 break;
             case GameStatus.Paused:
                 PlayPauseMusic();
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(string name)
     {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
+        Sound s = Array.Find(_musicSounds, x => x.name == name);
 
         if (s == null)  
         {
@@ -60,9 +60,9 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            musicSource.clip = s.clip;
-            musicSource.Play();
-            if(alternateSource.isPlaying)
+            SetUpAudioSource(_musicSource,s);
+            _musicSource.Play();
+            if(_alternateSource.isPlaying)
             {
                 StopPauseMusic();
             }
@@ -71,7 +71,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
+        Sound s = Array.Find(_sfxSounds, x => x.name == name);
 
         if (s == null)
         {
@@ -79,14 +79,14 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            sfxSource.clip = s.clip;
-            sfxSource.Play();
+            SetUpAudioSource (_sfxSource, s);
+            _sfxSource.Play();
         }
     }
 
     public void PlayPauseMusic()
     {
-        Sound s = Array.Find(musicSounds, x => x.name == "pauseMusic");
+        Sound s = Array.Find(_musicSounds, x => x.name == "pause");
 
         if (s == null)
         {
@@ -94,23 +94,29 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            if (musicSource.isPlaying)
+            if (_musicSource.isPlaying)
             {
                 PauseMusic();
             }
-            alternateSource.clip = s.clip;
-            alternateSource.Play();
+            SetUpAudioSource(_alternateSource, s);
+            _alternateSource.Play();
         }
     }
 
     public void StopPauseMusic()
     {
-        alternateSource.Stop();
+        _alternateSource.Stop();
 
 
     }
 
-    public void PauseMusic() { musicSource.Pause(); }
-    public void UnPauseMusic() { musicSource.UnPause(); }
+    public void PauseMusic() { _musicSource.Pause(); }
+    public void UnPauseMusic() { _musicSource.UnPause(); }
 
+    private void SetUpAudioSource(AudioSource audioSource, Sound sound)
+    {
+        audioSource.clip = sound.clip;
+        audioSource.pitch = sound.pitch;
+        audioSource.volume = sound.volume;
+    }
 }

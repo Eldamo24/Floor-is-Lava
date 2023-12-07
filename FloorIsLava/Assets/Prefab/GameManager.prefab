@@ -481,24 +481,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f9c65da55d34b448947d8be58ee7974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
-  - name: menuMusic
-    clip: {fileID: 8300000, guid: 976e3986d86115d42b91039deacce035, type: 3}
-  - name: playingMusic
+  _musicSounds:
+  - name: playing
     clip: {fileID: 8300000, guid: bfe86a07c6af4fe48865de5b5bd7c8de, type: 3}
-  - name: pauseMusic
+    volume: 0
+    pitch: 1
+  - name: pause
     clip: {fileID: 8300000, guid: 40cc58e940ae6374fb679cdf7fe98c61, type: 3}
-  sfxSounds:
-  - name: jump
-    clip: {fileID: 8300000, guid: 1ba4b30230ade964ea57c9817b7db635, type: 3}
-  - name: walk
-    clip: {fileID: 8300000, guid: f0a27856612730342bc5ab543cd9f85c, type: 3}
-  - name: damage
-    clip: {fileID: 8300000, guid: a9b592fd4546df94388e206f69661506, type: 3}
-  - name: dead
-    clip: {fileID: 8300000, guid: 61de26b6fdd0029459fca56b46233423, type: 3}
-  - name: rockFall
-    clip: {fileID: 8300000, guid: 750429c480099b841853f3ace34bf8ed, type: 3}
-  musicSource: {fileID: 2566678541617262432}
-  sfxSource: {fileID: 6210624193763518802}
-  alternateSource: {fileID: 7514681114734796964}
+    volume: 1
+    pitch: 1
+  - name: menu
+    clip: {fileID: 8300000, guid: 976e3986d86115d42b91039deacce035, type: 3}
+    volume: 1
+    pitch: 1
+  _sfxSounds: []
+  _musicSource: {fileID: 2566678541617262432}
+  _sfxSource: {fileID: 6210624193763518802}
+  _alternateSource: {fileID: 7514681114734796964}

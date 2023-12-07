@@ -60,14 +60,13 @@ public class PlayerBehaviour : MonoBehaviour
                 PlayerHeal(collisionedObject.GetComponent<HealthGiver>().health); 
                 break;
             case Tags.Stake:
-            case Tags.Platform:
                 if (_grapplingScript.isGrappling && !_isGrounded.grounded)
                 {
                     //Debug.Log("tgrEnter de platform atascado");
                     //_rb.AddForce(Vector3.up * 300, ForceMode.VelocityChange);
                     _rb.AddExplosionForce(100, Vector3.up, 10);
                 }
-            break;
+                break;
 
         }
     }
@@ -79,7 +78,6 @@ public class PlayerBehaviour : MonoBehaviour
         switch (collisionedObject.tag)
         {
             case Tags.Stake:
-            case Tags.Platform:
                 if (_grapplingScript.isGrappling && !_isGrounded.grounded)
                 {
                     //Debug.Log("tgrStay de platform atascado");
@@ -112,6 +110,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         GameManager.gameManager._playerHealth.DmgUnit(dmg);
         _healthBar.SetHealth(GameManager.gameManager._playerHealth.Health);
+        AudioManager.Instance.PlaySFX("damage");
     }
 
     private void PlayerHeal(int healing)
