@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
         playerPosition.position = new Vector3(PlayerPrefs.GetFloat("posX"), PlayerPrefs.GetFloat("posY"), PlayerPrefs.GetFloat("posZ"));
         lava.position = new Vector3(PlayerPrefs.GetFloat("posLavaX"), PlayerPrefs.GetFloat("posLavaY"), PlayerPrefs.GetFloat("posLavaZ"));
         _playerHealth.Health = PlayerPrefs.GetInt("health");
+        health.SetHealth(_playerHealth.Health);
     }
 
 
