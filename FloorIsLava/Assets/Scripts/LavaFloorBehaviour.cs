@@ -30,7 +30,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 
     public Vector3 SelfPosition { get { return gameObject.GetComponent<Transform>().position; } }
 
-    public bool IsPlayerWithinRange { get { return Mathf.Abs(PlayerPosition.y - SelfPosition.y) > 5 ; } }
+    public bool IsPlayerWithinRange { get { return Mathf.Abs(PlayerPosition.y - SelfPosition.y) > 10 ; } }
     public float VelocityMultiplier
     {
         get
@@ -61,7 +61,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
         }
 
         public float Normal { get { return normal * 0.15f; } }
-        public float Fast { get { return normal *2; } }
+        public float Fast { get { return normal * 1.4f; } }
         public float GameOverFast { get { return normal * 15f; } }
     }
     
