@@ -172,6 +172,12 @@ classDiagram
         -OnTriggerEnter(Collider)
     }
 
+    class LavaStop{
+	-LavaFloorBehaviour lava
+	-Start()
+	-OnTriggerEnter(Collider)
+    }
+
     IEnemyDamage<|-- LavaFloorBehaviour : Implements
     class LavaFloorBehaviour{
         -Vector3 _startingPosition
@@ -192,6 +198,8 @@ classDiagram
         +IncreaseYPosition(float)
         +IncreaseYPosition()
         -OnGameStatusChanged(GameStatus)
+	+SetFrozenVelocity(bool)
+	-RestartVelocity()
     }
 
     IEnemyDamage<|-- LittleRockBehaviour : Implements
