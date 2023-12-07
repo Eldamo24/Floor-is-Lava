@@ -38,16 +38,13 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
             if(GameManager.gameManager.CurrentGameStatus.Equals(GameStatus.GameOver))
             {
                 //juego terminado entonces rellenar de lava a las chapas
-                Debug.Log("GAMEOVERFAST");
                 return lavaVelocity.GameOverFast;
             }else if(IsPlayerWithinRange){
                 //rubberbanding: si el player esta muy lejos, llenarse al doble de rapido
-                Debug.Log("FAST");
                 return lavaVelocity.Fast;
             }
             else
             {
-                Debug.Log("NORMAL");
                 return lavaVelocity.Normal;
             }
         }
