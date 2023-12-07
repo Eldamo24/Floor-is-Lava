@@ -29,4 +29,5 @@ public class HealthBar : MonoBehaviour
     {
         _healthSlider.value = health;
     }
+
 }
