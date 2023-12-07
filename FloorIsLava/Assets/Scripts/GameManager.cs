@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
+    [SerializeField]
+    private HealthBar health;
 
     [SerializeField]
     private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
@@ -117,6 +119,30 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.PlaySFX("pause");
                 break;
         }
+    }
+
+    public void SaveGame()
+    {
+        Transform playerPosition = GameObject.Find("Player").GetComponent<Transform>();
+        Transform lava = GameObject.Find("Floor").GetComponent<Transform>();
+        PlayerPrefs.SetInt("health", _playerHealth.Health);
+        PlayerPrefs.SetFloat("posX", playerPosition.position.x);
+        PlayerPrefs.SetFloat("posY", playerPosition.position.y);
+        PlayerPrefs.SetFloat("posZ", playerPosition.position.z);
+        PlayerPrefs.SetFloat("posLavaX", lava.position.x);
+        PlayerPrefs.SetFloat("posLavaY", lava.position.y);
+        PlayerPrefs.SetFloat("posLavaZ", lava.position.z);
+
+
+    }
+
+    public void LoadGame()
+    {
+        Transform playerPosition = GameObject.Find("Player").GetComponent<Transform>();
+        Transform lava = GameObject.Find("Floor").GetComponent<Transform>();
+        playerPosition.position = new Vector3(PlayerPrefs.GetFloat("posX"), PlayerPrefs.GetFloat("posY"), PlayerPrefs.GetFloat("posZ"));
+        lava.position = new Vector3(PlayerPrefs.GetFloat("posLavaX"), PlayerPrefs.GetFloat("posLavaY"), PlayerPrefs.GetFloat("posLavaZ"));
+        _playerHealth.Health = PlayerPrefs.GetInt("health");
     }
 
 
