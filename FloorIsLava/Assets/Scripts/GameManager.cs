@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
         {
 
             CurrentGameStatus = GameStatus.GameOver;
+            AudioManager.Instance.PlaySFX("dead");
         }
     }
 
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour
                 break;
             case GameStatus.Playing:
                 gameManager.CurrentGameStatus = GameStatus.Paused;
+                AudioManager.Instance.PlaySFX("pause");
                 break;
         }
     }
