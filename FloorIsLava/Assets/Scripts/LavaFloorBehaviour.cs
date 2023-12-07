@@ -143,4 +143,15 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
                 break;
         }
     }
+
+    public void SetFrozenVelocity(bool isFrozen)
+    {
+        _frozenVelocity = isFrozen;
+        Invoke("RestartVelocity", 5);
+    }
+
+    private void RestartVelocity()
+    {
+        _frozenVelocity = false;
+    }
 }
