@@ -21,6 +21,8 @@ classDiagram
       +LoadMainMenu()
       +ExitGame()
       +Pause()
+      +LoadGame()
+      +SaveGame()
     }
 
     class GameStatus{
@@ -48,6 +50,11 @@ classDiagram
         +UnitHealth(int,int)
         +DmgUnit(int)
         +HealUnit(int)
+    }
+
+    class SaveTrigger{
+        -GameManager manager:Serialized
+	-OnTriggerEnter(Collider)
     }
 
 ```
