@@ -494,7 +494,39 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 976e3986d86115d42b91039deacce035, type: 3}
     volume: 1
     pitch: 1
-  _sfxSounds: []
+  _sfxSounds:
+  - name: jump
+    clip: {fileID: 8300000, guid: 1ba4b30230ade964ea57c9817b7db635, type: 3}
+    volume: 1
+    pitch: 1
+  - name: damage
+    clip: {fileID: 8300000, guid: 2f8a417ff5557344f8d1c4e6ea3e2fe0, type: 3}
+    volume: 1
+    pitch: 1
+  - name: dead
+    clip: {fileID: 8300000, guid: 342ec3b3075647046ac04cb32b3800b0, type: 3}
+    volume: 1
+    pitch: 0
+  - name: pause
+    clip: {fileID: 8300000, guid: cfeba6cd43e55d842bcbb27f0b448a78, type: 3}
+    volume: 1
+    pitch: 0
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+  - name: 
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
   _musicSource: {fileID: 2566678541617262432}
   _sfxSource: {fileID: 6210624193763518802}
   _alternateSource: {fileID: 7514681114734796964}
