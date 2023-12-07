@@ -22,9 +22,9 @@ public class DescendingBehaviour : MonoBehaviour
     private float deltaT = 0;
     private float y = 0;
     private float deltaY = 0;
-    const float newPositionDistance = 1.5f;
-    const int cantidadDePuntos = 8;
-    const int separacionAngular = 360/cantidadDePuntos;
+    const float newPositionDistance = 1.5f; // Distance forward where the character will be lacated
+    const int cantidadDePuntos = 8; // amount of point (around new position) to be cheked
+    const int angularSeparation = 360/cantidadDePuntos;
     const float rotationSpeed = 360; // degrees per second 
     const float positioningSpeed = 2; // meters per second
     const float descendingSpeed = 0.75f; // meters per second
@@ -39,33 +39,13 @@ public class DescendingBehaviour : MonoBehaviour
         playerRigidbody =  player.GetComponent<Rigidbody>();
         // "PlayerObj" must be child of "Player"
         // Due to historical development reasons, this object is the one that contains the character's orientation.
-        playerModel= player.Find("PlayerObj"); 
+        playerModel = player.Find("PlayerObj"); 
     }
 
     // Update is called once per frame
     private void Update()
     {
         Descend();
-    }
-
-    // It tells if there is not any contact with nothing just in front (in the newPosition)
-    public bool DetectEdge()
-    {
-        // It checks if there will be any obstacles in the new position.
-        newPosition = player.transform.position+newPositionDistance*playerModel.transform.forward;
-        if (Physics.Raycast(newPosition, Vector3.down, 2) || Physics.Raycast(newPosition, Vector3.up, 1.85f))
-            return false;
-
-        // It checks the same but in a some points around new position
-        radioVector = newPositionDistance/2*playerModel.transform.forward;
-        for (int i = 0; i < cantidadDePuntos; i++)
-        {
-            referencePoint=newPosition+radioVector;            
-            if (Physics.Raycast(referencePoint, Vector3.down, 2) || Physics.Raycast(referencePoint, Vector3.up, 1.85f))
-                return false;
-            radioVector = Quaternion.Euler(0, separacionAngular, 0) * radioVector;            
-        }
-        return true;
     }
 
     private void Descend()
@@ -78,8 +58,28 @@ public class DescendingBehaviour : MonoBehaviour
             if (DetectEdge())
                 StartCoroutine(DescentSequence());                
             else // DebugLog could be removed
-                Debug.Log("No está en un borde");                 
+                Debug.Log("No tiene sentido intentar descender (o no es borde o hay lava o suelo cerca)");                 
         }
+    }
+
+    // It tells if there is not any contact with nothing just in front (in the newPosition)
+    public bool DetectEdge()
+    {
+        // It checks if there will be any obstacles in the new position.
+        newPosition = player.transform.position+newPositionDistance*playerModel.transform.forward;
+        if (Physics.Raycast(newPosition, Vector3.down, 2) || Physics.Raycast(newPosition, Vector3.up, 1.85f))
+            return false;
+
+        // It checks the same but in some points around new position
+        radioVector = newPositionDistance/2*playerModel.transform.forward;
+        for (int i = 0; i < cantidadDePuntos; i++)
+        {
+            referencePoint=newPosition+radioVector;            
+            if (Physics.Raycast(referencePoint, Vector3.down, 2) || Physics.Raycast(referencePoint, Vector3.up, 1.85f))
+                return false;
+            radioVector = Quaternion.Euler(0, angularSeparation, 0) * radioVector;            
+        }
+        return true;
     }
 
     private IEnumerator DescentSequence()
@@ -124,7 +124,7 @@ public class DescendingBehaviour : MonoBehaviour
     }
     private IEnumerator VerticalDisplacement(float speed )
     {
-        // I think looks better with a faster initial descent of 1.5 meters
+        // I think it looks better with a faster initial descent of 1.5 meters
         // But rigidbody physics are disabled, so I have to implement a "free fall".
         // In free fall y=g/2*T^2 -> dy = g*T*dT
         T = 0;
