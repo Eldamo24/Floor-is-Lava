@@ -12,6 +12,10 @@ public class DescendingBehaviour : MonoBehaviour
 {
     // Caching variables (more performance?)
     private Transform player;
+    private Transform stake;
+    private bool descendingInProcess = false;
+    private Vector3 stakePosition;
+    private Vector3 stakeForward;
     private Transform playerModel;
     private PlayerInput playerInput;
     private Rigidbody playerRigidbody;
@@ -29,6 +33,7 @@ public class DescendingBehaviour : MonoBehaviour
     const float positioningSpeed = 2; // meters per second
     const float descendingSpeed = 0.75f; // meters per second
     const float delayToReleaseRope = 1; // in seconds
+    
 
     // Start is called before the first frame update
     private void Start()
@@ -40,9 +45,11 @@ public class DescendingBehaviour : MonoBehaviour
         // "PlayerObj" must be child of "Player"
         // Due to historical development reasons, this object is the one that contains the character's orientation.
         playerModel = player.Find("PlayerObj"); 
+        // "Stake" must be child of "DescendingFeature"
+        stake = transform.Find("Stake");
+        stake.transform.gameObject.SetActive(false); // Initially no-visible
     }
 
-    // Update is called once per frame
     private void Update()
     {
         Descend();
@@ -50,7 +57,12 @@ public class DescendingBehaviour : MonoBehaviour
 
     private void Descend()
     {
-        if(Input.GetKeyDown(KeyCode.U)) // It detects when the "U" key is pressed (but not if it remains pressed)
+        if (descendingInProcess)
+        {
+            stake.transform.position = stakePosition;
+            stake.transform.forward = stakeForward;
+        }
+        else if(Input.GetKeyDown(KeyCode.U)) // It detects when the "U" key is pressed (but not if it remains pressed)
         {
             //GameObject playerGO = GameObject.Find("/player"); // '/' means that the scene is parent of player
             // EdgeDetector must be player's grandchild, playerObj's child, because it must rigid move/rotate with the 3d model
@@ -84,22 +96,30 @@ public class DescendingBehaviour : MonoBehaviour
 
     private IEnumerator DescentSequence()
     {
+        descendingInProcess = true;
+        
         // It disables input (player movement)
         playerInput.enabled=false;
         // These two lines disable RigidBody physics.
         playerRigidbody.isKinematic = true;
         playerRigidbody.detectCollisions = false;
 
+        stakePosition = player.transform.position;
+        stakeForward = playerModel.transform.forward;
         yield return StartCoroutine(Rotation(new Vector3(0, 180, 0), 180/rotationSpeed) );
         yield return StartCoroutine(HorizontalDisplacement(-newPositionDistance*playerModel.transform.forward, newPositionDistance/positioningSpeed));
+        stake.transform.gameObject.SetActive(true);
         yield return StartCoroutine(VerticalDisplacement(descendingSpeed));
         yield return new WaitForSeconds(delayToReleaseRope); // delay to release the rope
-
+        stake.transform.gameObject.SetActive(false);
+        
         // These two lines enable RigidBody physics.
         playerRigidbody.isKinematic = false;
         playerRigidbody.detectCollisions = true;
         // It enables input (player movement)
         playerInput.enabled=true;
+
+        descendingInProcess = false;
     }
 
     private IEnumerator Rotation(Vector3 angle, float duration )
