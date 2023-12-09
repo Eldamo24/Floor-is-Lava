@@ -10,7 +10,7 @@ public class DrawRope : MonoBehaviour
 
     void Start()
     {
-        // Player/DescendingFeature/Stake/Rope (Player is grand-grand-father of Rope)
+        // Player/RappellingFeature/Stake/Rope (Player is grand-grand-father of Rope)
         player = transform.parent.transform.parent.transform.parent;
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.startColor = Color.grey;

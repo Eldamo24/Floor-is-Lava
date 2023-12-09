@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Descend",
+                    "name": "Rappelling",
                     "type": "Button",
                     "id": "c9694737-548c-443f-95a4-84706989a4c4",
                     "expectedControlType": "Button",
@@ -252,12 +252,23 @@
                 },
                 {
                     "name": "",
-                    "id": "ed1cab0b-425e-409f-9db9-4e12f8ee95f9",
+                    "id": "a3192872-3997-43de-9894-61556ea1a005",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Descend",
+                    "action": "Rappelling",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a407bff-49b4-4579-8493-d2e24dc37ee4",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Rappelling",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

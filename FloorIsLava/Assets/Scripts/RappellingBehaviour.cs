@@ -8,12 +8,12 @@ using UnityEngine.InputSystem;
 //using Input = UnityEngine.Input;
 
 
-public class DescendingBehaviour : MonoBehaviour
+public class RappellingBehaviour : MonoBehaviour
 {
     // Caching variables (more performance?)
     private Transform player;
     private Transform stake;
-    private bool descendingInProcess = false;
+    private bool rappellingInProcess = false;
     private Vector3 stakePosition;
     private Vector3 stakeForward;
     private Transform playerModel;
@@ -38,45 +38,47 @@ public class DescendingBehaviour : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        // The parent of "DescendingFeature" must be "Player"
+        // The parent of "RappellingFeature" must be "Player"
         player = transform.parent; 
         playerInput = player.GetComponent<PlayerInput>();
         playerRigidbody =  player.GetComponent<Rigidbody>();
         // "PlayerObj" must be child of "Player"
         // Due to historical development reasons, this object is the one that contains the character's orientation.
         playerModel = player.Find("PlayerObj"); 
-        // "Stake" must be child of "DescendingFeature"
+        // "Stake" must be child of "RappellingFeature"
         stake = transform.Find("Stake");
         stake.transform.gameObject.SetActive(false); // Initially no-visible
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Descend();
-    }
-
-    private void Descend()
-    {
-        if (descendingInProcess)
+        if (rappellingInProcess)
         {
             stake.transform.position = stakePosition;
             stake.transform.forward = stakeForward;
-        }
-        else if(Input.GetKeyDown(KeyCode.U)) // It detects when the "U" key is pressed (but not if it remains pressed)
+        }        
+    }
+
+    public void Rappelling(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.performed && !rappellingInProcess) // the action (of press "R" key) has just been performed and player is not yet rappeling
         {
-            //GameObject playerGO = GameObject.Find("/player"); // '/' means that the scene is parent of player
-            // EdgeDetector must be player's grandchild, playerObj's child, because it must rigid move/rotate with the 3d model
             // It checks if player is close to an edge, if so proceed to descend
             if (DetectEdge())
-                StartCoroutine(DescentSequence());                
+                StartCoroutine(RappellingSequence());                
             else // DebugLog could be removed
-                Debug.Log("No tiene sentido intentar descender (o no es borde o hay lava o suelo cerca)");                 
+                Debug.Log("No tiene sentido intentar descender (o no es borde, o hay lava, o suelo cerca, o está con un pie en el aire y no puede maniobrar)");                 
         }
     }
 
     // It tells if there is not any contact with nothing just in front (in the newPosition)
     public bool DetectEdge()
-    {
+    {   
+        // This first line is a patch
+        // It checks that just below player there is a platform, because player could be falling and in contact with a platform (a vertical wall)
+        if (!Physics.Raycast(player.transform.position, Vector3.down, 0.05f)) // Only 5cm of tolerance 
+            return false;        
+        
         // It checks if there will be any obstacles in the new position.
         newPosition = player.transform.position+newPositionDistance*playerModel.transform.forward;
         if (Physics.Raycast(newPosition, Vector3.down, 2) || Physics.Raycast(newPosition, Vector3.up, 1.85f))
@@ -94,9 +96,9 @@ public class DescendingBehaviour : MonoBehaviour
         return true;
     }
 
-    private IEnumerator DescentSequence()
+    private IEnumerator RappellingSequence()
     {
-        descendingInProcess = true;
+        rappellingInProcess = true;
         
         // It disables input (player movement)
         playerInput.enabled=false;
@@ -119,7 +121,7 @@ public class DescendingBehaviour : MonoBehaviour
         // It enables input (player movement)
         playerInput.enabled=true;
 
-        descendingInProcess = false;
+        rappellingInProcess = false;
     }
 
     private IEnumerator Rotation(Vector3 angle, float duration )

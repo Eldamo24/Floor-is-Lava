@@ -22,7 +22,7 @@ public class SuicideBehaviour : MonoBehaviour
         playerRigidbody =  transform.parent.GetComponent<Rigidbody>();
     }
 
-    private void Update() 
+    private void FixedUpdate() 
     {
         if (!groundInContact)
             playerMaxSpeed = Mathf.Max(playerRigidbody.velocity.magnitude, playerMaxSpeed);
