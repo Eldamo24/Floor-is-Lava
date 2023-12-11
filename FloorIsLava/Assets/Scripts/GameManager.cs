@@ -4,7 +4,6 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -141,7 +140,7 @@ public class GameManager : MonoBehaviour
         _playerHealth.Health = PlayerPrefs.GetInt("health");
     }
 
-    private void TriggerEndLevel()
+    public void TriggerEndLevel()
     {
         switch (SceneManager.GetActiveScene().name)
         {
