@@ -9,7 +9,6 @@ public class PlayerBehaviour : MonoBehaviour
     private Grappling _grapplingScript;
     private isGrounded _isGrounded;
     private Rigidbody _rb;
-    [SerializeField] HealthBar _healthBar;
     public bool IsDead
     {
         get
@@ -115,7 +114,6 @@ public class PlayerBehaviour : MonoBehaviour
     private void PlayerHeal(int healing)
     {
         GameManager.gameManager._playerHealth.HealUnit(healing);
-        _healthBar.SetHealth(GameManager.gameManager._playerHealth.Health);
 
     }
 }

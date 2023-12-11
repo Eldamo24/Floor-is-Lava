@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class SuicideBehaviour : MonoBehaviour
 {
      // Caching variables (more performance?)
-    [SerializeField] HealthBar _healthBar;
     private Rigidbody playerRigidbody;
     private GameObject collisionedObject;
     private float playerMaxSpeed = 0;

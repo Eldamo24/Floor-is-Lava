@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
     [SerializeField]
-    private HealthBar health;
-
-    [SerializeField]
     private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
     public UnityEvent<GameStatus> OnGameStatusChanged;
     private float _defaultTimeScale = 1f;
