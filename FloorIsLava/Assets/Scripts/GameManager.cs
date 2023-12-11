@@ -141,7 +141,18 @@ public class GameManager : MonoBehaviour
         _playerHealth.Health = PlayerPrefs.GetInt("health");
     }
 
-
+    private void TriggerEndLevel()
+    {
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "level1":
+                LoadScene("level2");
+                break;
+            case "level2":
+                LoadScene("MainMenu");
+                break;
+        }
+    }
 }
 
 public static class Tags
