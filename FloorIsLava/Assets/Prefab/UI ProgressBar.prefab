@@ -171,7 +171,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4696078719850348389}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f185a8fcf59f1e4aa62e5b8cf49223f, type: 3}
   m_Name: 
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7201343642142274580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 560af2475aa97c34c825f810706c3f4b, type: 3}
   m_Name: 
@@ -504,6 +504,7 @@ GameObject:
   - component: {fileID: 4018044964179121586}
   - component: {fileID: 199074473965823314}
   - component: {fileID: 5206971466245943370}
+  - component: {fileID: 3905174172522130133}
   m_Layer: 5
   m_Name: UI ProgressBar
   m_TagString: Untagged
@@ -637,3 +638,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3905174172522130133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7654614066391071214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8501dd13f4f74749a9afb1a364913cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
