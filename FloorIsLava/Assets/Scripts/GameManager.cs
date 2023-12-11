@@ -144,10 +144,10 @@ public class GameManager : MonoBehaviour
     {
         switch (SceneManager.GetActiveScene().name)
         {
-            case "level1":
-                LoadScene("level2");
+            case "Level1":
+                LoadScene("Level2");
                 break;
-            case "level2":
+            case "Level2":
                 LoadScene("MainMenu");
                 break;
         }
