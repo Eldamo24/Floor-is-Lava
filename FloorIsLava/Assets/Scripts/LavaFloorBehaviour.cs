@@ -88,22 +88,6 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
                 _levelFilled = true;
             };
         }
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            RestartPosition();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _frozenVelocity = !_frozenVelocity;
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            _upwardsSpeed *= 2;
-        }else if (Input.GetKeyUp(KeyCode.V))
-        {
-            _upwardsSpeed /= 2;
-        }
     }
 
     public void RestartPosition()

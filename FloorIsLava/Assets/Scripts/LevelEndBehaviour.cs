@@ -6,7 +6,8 @@ public class LevelEndBehaviour : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "player")
+        Debug.Log("entro alguien al trigger");
+        if(other.gameObject.tag == "Player")
         {
             GameManager.gameManager.TriggerEndLevel();
         }
