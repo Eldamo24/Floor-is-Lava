@@ -113,7 +113,7 @@ public class RigidBodyMovement : MonoBehaviour
 
         if (callbackContext.performed)
         {
-            if (play.GetComponent<isGrounded>().grounded)
+            if (play.GetComponent<isGrounded>().grounded && IsMovementAllowed)
             {
                 rb.AddForce(Vector3.up * upForce);
                 anim.SetBool("Jumping", true);
