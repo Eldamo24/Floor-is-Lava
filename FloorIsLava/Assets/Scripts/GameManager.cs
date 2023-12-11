@@ -58,10 +58,14 @@ public class GameManager : MonoBehaviour
         {
             case "Level1":
             case "Level2":
+                LoadScene("Credits");
                 CurrentGameStatus = GameStatus.Playing;
                 break;
             case "MainMenu":
                 CurrentGameStatus = GameStatus.OnMenu;
+                break;
+            case "Credits":
+                StartCoroutine(HandleCreditsScene());   
                 break;
         }   
 
@@ -148,9 +152,15 @@ public class GameManager : MonoBehaviour
                 LoadScene("Level2");
                 break;
             case "Level2":
-                LoadScene("MainMenu");
+                LoadScene("Credits");
                 break;
         }
+    }
+
+    IEnumerator HandleCreditsScene() 
+    {
+        yield return new WaitForSecondsRealtime(30);
+        LoadScene("MainMenu");
     }
 }
 
@@ -181,4 +191,5 @@ public enum GameScenes
     MainMenu,
     Level1,
     Level2,
+    Credits
 }
