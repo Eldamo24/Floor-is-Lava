@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
         {
 
             CurrentGameStatus = GameStatus.GameOver;
-            AudioManager.Instance.PlaySFX("dead");
         }
     }
 

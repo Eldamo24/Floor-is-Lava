@@ -108,7 +108,10 @@ public class PlayerBehaviour : MonoBehaviour
     private void PlayerTakeDmg(int dmg)
     {
         GameManager.gameManager._playerHealth.DmgUnit(dmg);
-        AudioManager.Instance.PlaySFX("damage");
+        if(!IsDead)
+        {
+            AudioManager.Instance.PlaySFX("damage");
+        }
     }
 
     private void PlayerHeal(int healing)
