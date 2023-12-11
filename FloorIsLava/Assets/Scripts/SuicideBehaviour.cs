@@ -45,7 +45,6 @@ public class SuicideBehaviour : MonoBehaviour
             if (playerMaxSpeed>minDamageSpeed)
             {
                 GameManager.gameManager._playerHealth.DmgUnit(LevelOfDamage());
-                _healthBar.SetHealth(GameManager.gameManager._playerHealth.Health);
                 Debug.Log("DAÑO POR CAIDA: " + LevelOfDamage());
             }
             playerMaxSpeed = 0;

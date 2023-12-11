@@ -109,7 +109,6 @@ public class PlayerBehaviour : MonoBehaviour
     private void PlayerTakeDmg(int dmg)
     {
         GameManager.gameManager._playerHealth.DmgUnit(dmg);
-        _healthBar.SetHealth(GameManager.gameManager._playerHealth.Health);
         AudioManager.Instance.PlaySFX("damage");
     }
 
