@@ -14,13 +14,19 @@ public class ActivateFall : MonoBehaviour
             if(fallingBody.GetComponent<Rigidbody>() == null) // RigidBody component doesn't exist
             {   
                 // This is the mass value used in OLD RockFall script (it could be changed)
-                fallingBody.AddComponent<Rigidbody>().mass = 300; 
+                fallingBody.AddComponent<Rigidbody>().mass = 300;
+
             }
             else // RigidBody component exists (but RigidBody physics should be initially disabled in XXXXXBehaviour.cs).
             {
                 // Enable RigidBody physics 
                 fallingBody.GetComponent<Rigidbody>().isKinematic = false;
                 fallingBody.GetComponent<Rigidbody>().detectCollisions = true;
+                if(!AudioManager.Instance._sfxSource.isPlaying ) //reproducir sonido de piedra cayendo si no esta en uso el source
+                {
+                    AudioManager.Instance.PlaySFX("rockfall0"); 
+                }
+
             }
         }
     }

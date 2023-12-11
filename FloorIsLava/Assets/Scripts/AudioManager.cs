@@ -98,8 +98,13 @@ public class AudioManager : MonoBehaviour
             {
                 PauseMusic();
             }
-            SetUpAudioSource(_alternateSource, s);
-            _alternateSource.Play();
+
+            if(!_sfxSource.isPlaying)
+            {
+                SetUpAudioSource(_alternateSource, s);
+                _alternateSource.Play();
+            }
+
         }
     }
 
