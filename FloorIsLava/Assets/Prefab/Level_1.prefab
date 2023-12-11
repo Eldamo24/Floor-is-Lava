@@ -20831,8 +20831,8 @@ GameObject:
   - component: {fileID: 553364035839807969}
   - component: {fileID: 7815969707882798017}
   - component: {fileID: 3880362810322625641}
-  - component: {fileID: 3642451616590362660}
   - component: {fileID: 8829190439432743663}
+  - component: {fileID: 3642451616590362660}
   m_Layer: 3
   m_Name: Floor
   m_TagString: LavaFloor
@@ -21038,23 +21038,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &3642451616590362660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3609518738661785080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a720a1edc9106943901fd13b740b5ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _upwardsSpeed: 0
-  _gameOverVelocityMultiplier: 20
-  _frozenVelocity: 0
-  _levelFilled: 0
-  _levelFilledYPosition: 86
 --- !u!65 &8829190439432743663
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21076,6 +21059,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 50, y: 0.5737686, z: 43.301273}
   m_Center: {x: 13.406036, y: -43.812878, z: 6.4228077}
+--- !u!114 &3642451616590362660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3609518738661785080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a720a1edc9106943901fd13b740b5ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upwardsSpeed: 0
+  _gameOverVelocityMultiplier: 20
+  _frozenVelocity: 0
+  _levelFilled: 0
+  _levelFilledYPosition: 86
+  _distancePlayerOutOfRange: 10
 --- !u!1 &3670656373408153272
 GameObject:
   m_ObjectHideFlags: 0
