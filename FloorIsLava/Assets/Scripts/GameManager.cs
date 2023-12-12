@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour
         {
             case "Level1":
             case "Level2":
-                LoadScene("Credits");
                 CurrentGameStatus = GameStatus.Playing;
                 break;
             case "MainMenu":
