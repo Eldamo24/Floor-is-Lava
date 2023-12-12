@@ -42,6 +42,13 @@ public class AudioManager : MonoBehaviour
             case GameStatus.Paused:
                 PlayPauseMusic();
                 break;
+            case GameStatus.GameOver:
+                if (_musicSource.isPlaying)
+                {
+                    _musicSource.Stop();
+                    PlaySFX("dead");
+                }
+                break;
         }
     }
 
@@ -98,8 +105,13 @@ public class AudioManager : MonoBehaviour
             {
                 PauseMusic();
             }
-            SetUpAudioSource(_alternateSource, s);
-            _alternateSource.Play();
+
+            if(!_sfxSource.isPlaying)
+            {
+                SetUpAudioSource(_alternateSource, s);
+                _alternateSource.Play();
+            }
+
         }
     }
 
@@ -118,5 +130,11 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = sound.clip;
         audioSource.pitch = sound.pitch;
         audioSource.volume = sound.volume;
+    }
+
+    IEnumerator PlaySFXWithDelay(string soundName)
+    {
+        yield return new WaitForSecondsRealtime(0.3f);
+        PlaySFX(soundName);
     }
 }

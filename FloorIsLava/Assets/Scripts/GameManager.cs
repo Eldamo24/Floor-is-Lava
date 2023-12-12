@@ -4,7 +4,6 @@ using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +11,6 @@ public class GameManager : MonoBehaviour
     public UnitHealth _playerHealth = new UnitHealth(100, 100);
     [SerializeField]
     private LavaFloorBehaviour _lavaFloor;
-    [SerializeField]
-    private HealthBar health;
-
     [SerializeField]
     private GameStatus _currentGameStatus;     //field que cambia segun el esstado del juego
     public UnityEvent<GameStatus> OnGameStatusChanged;
@@ -67,6 +63,9 @@ public class GameManager : MonoBehaviour
             case "MainMenu":
                 CurrentGameStatus = GameStatus.OnMenu;
                 break;
+            case "Credits":
+                StartCoroutine(HandleCreditsScene());   
+                break;
         }   
 
     }
@@ -79,7 +78,6 @@ public class GameManager : MonoBehaviour
         {
 
             CurrentGameStatus = GameStatus.GameOver;
-            AudioManager.Instance.PlaySFX("dead");
         }
     }
 
@@ -143,10 +141,26 @@ public class GameManager : MonoBehaviour
         playerPosition.position = new Vector3(PlayerPrefs.GetFloat("posX"), PlayerPrefs.GetFloat("posY"), PlayerPrefs.GetFloat("posZ"));
         lava.position = new Vector3(PlayerPrefs.GetFloat("posLavaX"), PlayerPrefs.GetFloat("posLavaY"), PlayerPrefs.GetFloat("posLavaZ"));
         _playerHealth.Health = PlayerPrefs.GetInt("health");
-        health.SetHealth(_playerHealth.Health);
     }
 
+    public void TriggerEndLevel()
+    {
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Level1":
+                LoadScene("Level2");
+                break;
+            case "Level2":
+                LoadScene("Credits");
+                break;
+        }
+    }
 
+    IEnumerator HandleCreditsScene() 
+    {
+        yield return new WaitForSecondsRealtime(30);
+        LoadScene("MainMenu");
+    }
 }
 
 public static class Tags
@@ -176,4 +190,5 @@ public enum GameScenes
     MainMenu,
     Level1,
     Level2,
+    Credits
 }

@@ -16,6 +16,7 @@ public class FallingPlatform : MonoBehaviour
         {
             //Aqui iria el comienzo de la animacion de destruccion
             //Para luego destruir la plataforma
+            AudioManager.Instance.PlaySFX("rockfall1");
             anim.SetBool("IsDestroyed", true);
            Destroy(this.gameObject, 10);
         }

@@ -506,19 +506,19 @@ MonoBehaviour:
   - name: dead
     clip: {fileID: 8300000, guid: 342ec3b3075647046ac04cb32b3800b0, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 1
   - name: pause
     clip: {fileID: 8300000, guid: cfeba6cd43e55d842bcbb27f0b448a78, type: 3}
     volume: 1
-    pitch: 0
+    pitch: 1
   - name: 
     clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
   - name: 
     clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
   - name: 
     clip: {fileID: 0}
     volume: 0

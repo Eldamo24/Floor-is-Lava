@@ -19,6 +19,8 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
     private int _levelFilledYPosition;
     [SerializeField]
     private LavaVelocity lavaVelocity;
+    [SerializeField]
+    private int _distancePlayerOutOfRange = 10;
 
 
     //Properties
@@ -30,7 +32,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
 
     public Vector3 SelfPosition { get { return gameObject.GetComponent<Transform>().position; } }
 
-    public bool IsPlayerWithinRange { get { return Mathf.Abs(PlayerPosition.y - SelfPosition.y) > 10 ; } }
+    public bool IsPlayerWithinRange { get { return Mathf.Abs(PlayerPosition.y - SelfPosition.y) > _distancePlayerOutOfRange; } }
     public float VelocityMultiplier
     {
         get
@@ -41,6 +43,7 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
                 return lavaVelocity.GameOverFast;
             }else if(IsPlayerWithinRange){
                 //rubberbanding: si el player esta muy lejos, llenarse al doble de rapido
+                Debug.Log("lava rapida");
                 return lavaVelocity.Fast;
             }
             else
@@ -87,22 +90,6 @@ public class LavaFloorBehaviour : MonoBehaviour, IEnemyDamage
             {
                 _levelFilled = true;
             };
-        }
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            RestartPosition();
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _frozenVelocity = !_frozenVelocity;
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            _upwardsSpeed *= 2;
-        }else if (Input.GetKeyUp(KeyCode.V))
-        {
-            _upwardsSpeed /= 2;
         }
     }
 

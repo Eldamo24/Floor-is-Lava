@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class SuicideBehaviour : MonoBehaviour
 {
      // Caching variables (more performance?)
-    [SerializeField] HealthBar _healthBar;
     private Rigidbody playerRigidbody;
     private GameObject collisionedObject;
     private float playerMaxSpeed = 0;
@@ -22,7 +21,7 @@ public class SuicideBehaviour : MonoBehaviour
         playerRigidbody =  transform.parent.GetComponent<Rigidbody>();
     }
 
-    private void Update() 
+    private void FixedUpdate() 
     {
         if (!groundInContact)
             playerMaxSpeed = Mathf.Max(playerRigidbody.velocity.magnitude, playerMaxSpeed);
@@ -45,7 +44,6 @@ public class SuicideBehaviour : MonoBehaviour
             if (playerMaxSpeed>minDamageSpeed)
             {
                 GameManager.gameManager._playerHealth.DmgUnit(LevelOfDamage());
-                _healthBar.SetHealth(GameManager.gameManager._playerHealth.Health);
                 Debug.Log("DAÑO POR CAIDA: " + LevelOfDamage());
             }
             playerMaxSpeed = 0;

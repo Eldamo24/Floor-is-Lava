@@ -24,7 +24,12 @@ public class RigidBodyMovement : MonoBehaviour
     private float upForce;
     [SerializeField]
     private float _playerSpeed;
-    
+
+    // ADDED BY LEO - It is needed to avoid going through walls (class definition in WallDetectorBehaviour)
+    private WallDetectorBehaviour _WallDetectorBehaviour; // ADDED BY LEO
+    private Vector3 initialPosition; // ADDED BY LEO
+    private bool movementChecked; // ADDED BY LEO
+
     public bool IsDescending
     {
         get
@@ -56,11 +61,15 @@ public class RigidBodyMovement : MonoBehaviour
         playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
         //upForce = 290f;
         play.GetComponent<isGrounded>().OnFloorCollisionChanged.AddListener(setJumpingAnimation);
+        
+        // ADDED BY LEO - (WallDetector must be child of Player)
+        _WallDetectorBehaviour = player.Find("WallDetector").GetComponent<WallDetectorBehaviour>(); // ADDED BY LEO 
+        movementChecked = true; // ADDED BY LEO
 
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (IsMovementAllowed)
         {
@@ -77,9 +86,26 @@ public class RigidBodyMovement : MonoBehaviour
             {
                 anim.SetBool("IsRunning", true);
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-                rb.MovePosition(player.position + inputDir * Time.deltaTime * PlayerSpeed); 
+      
+                if (movementChecked) // ADDED BY LEO
+                {
+                    initialPosition = player.position; // ADDED BY LEO
+                    
+                    rb.MovePosition(player.position + inputDir * Time.deltaTime * PlayerSpeed);
+
+                    movementChecked = false; // ADDED BY LEO
+                    StartCoroutine(LittleDelay()); // ADDED BY LEO - FixedTime is 0.02s by default, this delay is longer to ensure several OnTrigger evaluations
+                    if (_WallDetectorBehaviour.wallInContact) // IF CONDITIONAL ADDED BY LEO - It is needed to avoid going through walls
+                        rb.MovePosition(initialPosition); // it reverts change of position
+                    movementChecked = true; // ADDED BY LEO
+                }
             }
         }
+    }
+
+    private IEnumerator LittleDelay() // ADDED BY LEO
+    {
+        yield return new WaitForSeconds(0.04f); // At least two default FixedTime
     }
 
     public void Jump(InputAction.CallbackContext callbackContext)
@@ -87,7 +113,7 @@ public class RigidBodyMovement : MonoBehaviour
 
         if (callbackContext.performed)
         {
-            if (play.GetComponent<isGrounded>().grounded)
+            if (play.GetComponent<isGrounded>().grounded && IsMovementAllowed)
             {
                 rb.AddForce(Vector3.up * upForce);
                 anim.SetBool("Jumping", true);

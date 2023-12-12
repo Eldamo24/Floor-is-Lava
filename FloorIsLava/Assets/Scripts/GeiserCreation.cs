@@ -14,7 +14,7 @@ public class GeiserCreation : MonoBehaviour
         box = GetComponent<Collider>();
         //le saco un time fijo y le hago uno dinámico para que no sean todos los geisers clones
         //que se activan y desactivan al mismo tiempo
-        InvokeRepeating("changeGeiserState", 0f, UnityEngine.Random.Range(5, 8));
+        InvokeRepeating("changeGeiserState", 0f, UnityEngine.Random.Range(3, 5));
         GameManager.gameManager.OnGameStatusChanged.AddListener(OnGameStatusChanged);
 
 
