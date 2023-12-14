@@ -6,12 +6,15 @@ using UnityEngine;
 public class StalactiteBehaviour : MonoBehaviour, IEnemyDamage
 {
     public int damage { get; set; }
+    private Rigidbody rigidBody;
 
     private void Start()
     {   
+        rigidBody = gameObject.GetComponent<Rigidbody>();
         // These two lines initially disable RigidBody physics.
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.GetComponent<Rigidbody>().detectCollisions = false;
+        rigidBody.isKinematic = true;
+        rigidBody.detectCollisions = false;
+        rigidBody.freezeRotation = true;
         // This sets the damage the stalactite deals to the player in a collision.
         // It is not very realistic because in real life the damage depends on the mass and speed at the time of collision.
         damage = 10;
@@ -54,6 +57,9 @@ public class StalactiteBehaviour : MonoBehaviour, IEnemyDamage
     // With this I intend to "disarm" the damage capacity of the stalactite (one second after the detection occurs).
     IEnumerator DisarmeStallactite()
     {   
+        // Disables constrain
+        rigidBody.freezeRotation = false;
+
         // Waits one second
         yield return new WaitForSeconds(1);
         
