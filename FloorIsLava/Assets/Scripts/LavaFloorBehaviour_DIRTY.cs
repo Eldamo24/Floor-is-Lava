@@ -1,10 +1,20 @@
 // Note by Leo:
-// Since there is a general fear against to modify code that works for level 1, this script is a way to reuse LavaFloorBehaviour.cs without modifying it.
+//
+// There has been no way to establish a unified criteria about how the game should be.
+// Consequently, some code contributions were developed considering only the artistic vision of level 1.
+// Since there is a general fear against to modify code that works for level 1. 
+// This script is a quick way to reuse LavaFloorBehaviour.cs without modifying it.
 // I know it's not the best programming practice, it's what I can do given the circumstances.
+// I know it's a very dirty bypass, I know it breaks the encapsulation, I know...
+// My other two options would be to submit to the vision of the other contributors, 
+// or to redo the code from scratch taking responsibility for making it work at both levels (it is unfair).
+//
 // LavaFloorBehaviour.cs has the UpwardsSpeed serialized field
+// (it is only read in the class construction and in the awake callback)
 // Actually that script considers a speed called "VelocityMultiplier"
 // "VelocityMultiplier" can take 3 possible values: Normal=0.15*UpwardsSpeed, Fast=1.4*UpwardsSpeed, GameOverFast=15*UpwardsSpeed
-// LavaFloorBehaviour_DIRTY.cs overwrites Normal speed with "publicSpeed"
+// (I think this is very confusing, because UpwardsSpeed is not the actual speed)
+// LavaFloorBehaviour_DIRTY.cs overwrites Normal speed with "publicSpeed" (if publicSpeedOn=true)
 
 using System.Collections;
 using System.Collections.Generic;
