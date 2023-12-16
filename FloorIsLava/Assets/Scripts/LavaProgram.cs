@@ -7,7 +7,8 @@
 // I know it's not the best programming practice, it's what I can do given the circumstances.
 // I know it's a very dirty bypass, I know it breaks the encapsulation, I know...
 // My other two options would be to submit to the vision of the other contributors, 
-// or to redo the code from scratch taking responsibility for making it work at both levels (it is unfair).
+// or to redo the code from scratch taking responsibility for making it work at both levels
+// (without support from anyone and, now, with nothing of time).
 //
 // LavaFloorBehaviour.cs has the UpwardsSpeed serialized field
 // (it is only read in the class construction and in the awake callback)
@@ -18,7 +19,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-//using System.Diagnostics;
 using UnityEngine;
 using System.Linq; // Needed in order to use .ToList() method
 
@@ -36,7 +36,8 @@ public class LavaProgram : MonoBehaviour
     // These numbers must have an order relationship associated with the order in which the player is supposed to find them.
     private Dictionary<string,LavaTriggerBehaviour> childsDictionary = new Dictionary<string,LavaTriggerBehaviour>();
 
-    int maxTrigger;
+    private int maxTrigger;
+    private int currentTrigger;
 
     // Start is called before the first frame update
     void Start()
@@ -44,18 +45,23 @@ public class LavaProgram : MonoBehaviour
         foreach (Transform childTransform in transform)
         {
             childsDictionary.Add(childTransform.name,childTransform.GetComponent<LavaTriggerBehaviour>());
-            Debug.Log("Trigger - "+childTransform.name); // BORRAME
         }
         initialLavaHeight = lava.transform.position.y; 
         lavaClass.publicSpeedOn = true;
-        StartCoroutine(SpeedUpLavaFixedHeight(0.1f, 0.01f, 0.75f));
+
+        maxTrigger=0;
+        currentTrigger=0;        
+        StartCoroutine(Trigger00());
     }
 
-    private void OnTriggerEnter(Collider other) // Inorder tod etect child's triggers, Parent GameObject (this one) need to have a rigidbody (could be kinematic)
+    private void FixedUpdate() 
+    {
+        lava.transform.Rotate(new Vector3(0f, 7.2f * lavaClass.publicSpeed / 0.01f, 0f) * Time.deltaTime);   
+    }
+    private void OnTriggerEnter(Collider other) // In order to detect child's triggers, Parent GameObject (this one) need to have a rigidbody (could be kinematic)
     {
         if (other.gameObject.tag == "Player")
         {
-            maxTrigger = 0;
             foreach(KeyValuePair<string,LavaTriggerBehaviour> child in childsDictionary.ToList()) // without ToList conversion/copy it can't remove dictionary entries inside foreach loop
             {
                 if (child.Value.Triggered())
@@ -68,9 +74,14 @@ public class LavaProgram : MonoBehaviour
             switch (maxTrigger)
             {
                 case 1:
-                    Debug.Log("01 triggered"); // BORRAME
-                    StartCoroutine(SpeedUpLavaFixedHeight(0.101f, 0.01f, 5));
+                    StartCoroutine(SpeedUpLavaFixedHeight(0.1025f, 0.02f, 6));
                     break;
+                case 2:
+                    StartCoroutine(SpeedUpLavaFixedHeight(0.15f, 0.01f, 7.5f));
+                    break;
+                case 3:
+                    StartCoroutine(SpeedUpLavaFixedHeight(0.37f, 0.00001f, 27f));
+                    break;                   
                 default:
                     break;
             }
@@ -78,20 +89,21 @@ public class LavaProgram : MonoBehaviour
         }
     }
 
-    /*private IEnumerator Trigger01(float positionY)
+      private IEnumerator Trigger00()
     {
-
-    }*/
-
+        yield return new WaitForSeconds(2);
+        StartCoroutine(SpeedUpLavaFixedHeight(0.1f, 0.01f, 0.75f));
+    }
     private IEnumerator SpeedUpLavaFixedHeight(float newSpeed, float endSpeed, float maxLavaHeight)
     {
-        lavaClass.publicSpeed = newSpeed;
+        currentTrigger = maxTrigger;
+        lavaClass.publicSpeed = newSpeed;        
         while (lava.transform.position.y<initialLavaHeight+maxLavaHeight) // maxLavaHeight is referred to initialLavaHeight
         {
            yield return new WaitForSeconds(0.1f); 
         }
         // The "IF" is just as a precaution in case another trigger shoot another speed change
-        if (lavaClass.publicSpeed == newSpeed) lavaClass.publicSpeed = endSpeed; 
+        if (currentTrigger == maxTrigger) lavaClass.publicSpeed = endSpeed; 
     }
 
 }

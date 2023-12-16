@@ -7,7 +7,8 @@
 // I know it's not the best programming practice, it's what I can do given the circumstances.
 // I know it's a very dirty bypass, I know it breaks the encapsulation, I know...
 // My other two options would be to submit to the vision of the other contributors, 
-// or to redo the code from scratch taking responsibility for making it work at both levels (it is unfair).
+// or to redo the code from scratch taking responsibility for making it work at both levels
+// (without support from anyone and, now, with nothing of time).
 //
 // LavaFloorBehaviour.cs has the UpwardsSpeed serialized field
 // (it is only read in the class construction and in the awake callback)
