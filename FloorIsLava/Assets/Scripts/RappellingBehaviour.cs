@@ -16,7 +16,7 @@ public class RappellingBehaviour : MonoBehaviour
     private bool rappellingInProcess = false;
     private Vector3 stakePosition;
     private Vector3 stakeForward;
-    private Transform playerModel;
+    // A SER BORRADO private Transform playerModel;
     private PlayerInput playerInput;
     private Rigidbody playerRigidbody;
     private Vector3 newPosition;
@@ -33,7 +33,6 @@ public class RappellingBehaviour : MonoBehaviour
     const float positioningSpeed = 2; // meters per second
     const float descendingSpeed = 0.75f; // meters per second
     const float delayToReleaseRope = 1; // in seconds
-    
 
     // Start is called before the first frame update
     private void Start()
@@ -42,9 +41,9 @@ public class RappellingBehaviour : MonoBehaviour
         player = transform.parent; 
         playerInput = player.GetComponent<PlayerInput>();
         playerRigidbody =  player.GetComponent<Rigidbody>();
-        // "PlayerObj" must be child of "Player"
-        // Due to historical development reasons, this object is the one that contains the character's orientation.
-        playerModel = player.Find("PlayerObj"); 
+        // A SER BORRADO "PlayerObj" must be child of "Player"
+        // A SER BORRADO Due to historical development reasons, this object is the one that contains the character's orientation.
+        // A SER BORRADO playerModel = player.Find("PlayerObj"); 
         // "Stake" must be child of "RappellingFeature"
         stake = transform.Find("Stake");
         stake.transform.gameObject.SetActive(false); // Initially no-visible
@@ -56,7 +55,7 @@ public class RappellingBehaviour : MonoBehaviour
         {
             stake.transform.position = stakePosition;
             stake.transform.forward = stakeForward;
-        }        
+        }
     }
 
     public void Rappelling(InputAction.CallbackContext callbackContext)
@@ -77,22 +76,25 @@ public class RappellingBehaviour : MonoBehaviour
         // This first line is a patch
         // It checks that just below player there is a platform, because player could be falling and in contact with a platform (a vertical wall)
         if (!Physics.Raycast(player.transform.position, Vector3.down, 0.05f)) // Only 5cm of tolerance 
-            return false;        
-        
+            return false;
+
         // It checks if there will be any obstacles in the new position.
-        newPosition = player.transform.position+newPositionDistance*playerModel.transform.forward;
-        if (Physics.Raycast(newPosition, Vector3.down, 2) || Physics.Raycast(newPosition, Vector3.up, 1.85f))
+        // A SER BORRADO newPosition = player.transform.position+newPositionDistance*playerModel.transform.forward;
+        newPosition = player.transform.position+newPositionDistance*player.transform.forward;
+        if (Physics.Raycast(newPosition+1.85f*Vector3.up, Vector3.down, 3.85f) || Physics.Raycast(newPosition+2f*Vector3.down, Vector3.up, 3.85f))
             return false;
 
         // It checks the same but in some points around new position
-        radioVector = newPositionDistance/2*playerModel.transform.forward;
+        // A SER BORRADO radioVector = newPositionDistance/2*playerModel.transform.forward;
+        radioVector = newPositionDistance/2*player.transform.forward;
         for (int i = 0; i < cantidadDePuntos; i++)
         {
             referencePoint=newPosition+radioVector;            
-            if (Physics.Raycast(referencePoint, Vector3.down, 2) || Physics.Raycast(referencePoint, Vector3.up, 1.85f))
+            if (Physics.Raycast(referencePoint+3.85f*Vector3.up, Vector3.down, 2f) || Physics.Raycast(referencePoint+2f*Vector3.down, Vector3.up, 3.85f))
                 return false;
             radioVector = Quaternion.Euler(0, angularSeparation, 0) * radioVector;            
         }
+
         return true;
     }
 
@@ -107,9 +109,11 @@ public class RappellingBehaviour : MonoBehaviour
         playerRigidbody.detectCollisions = false;
 
         stakePosition = player.transform.position;
-        stakeForward = playerModel.transform.forward;
+        // A SER BORRADO stakeForward = playerModel.transform.forward;
+        stakeForward = player.transform.forward;
         yield return StartCoroutine(Rotation(new Vector3(0, 180, 0), 180/rotationSpeed) );
-        yield return StartCoroutine(HorizontalDisplacement(-newPositionDistance*playerModel.transform.forward, newPositionDistance/positioningSpeed));
+        // A SER BORRADO yield return StartCoroutine(HorizontalDisplacement(-newPositionDistance*playerModel.transform.forward, newPositionDistance/positioningSpeed));
+        yield return StartCoroutine(HorizontalDisplacement(-newPositionDistance*player.transform.forward, newPositionDistance/positioningSpeed));
         stake.transform.gameObject.SetActive(true);
         yield return StartCoroutine(VerticalDisplacement(descendingSpeed));
         yield return new WaitForSeconds(delayToReleaseRope); // delay to release the rope
